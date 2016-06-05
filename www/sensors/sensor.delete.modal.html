@@ -1,0 +1,10 @@
+
+    <div class="ngdialog-message">
+        <div class="">
+            <h4>Delete Sensor&nbsp{{sensorIdData.sensorName}}</h4>
+        </div>
+        <div>
+          <button type="button" class="btn btn-default btn-sm" ng-click=closeThisDialog()>Cancel</button> &nbsp; &nbsp;
+          <button type="submit" class="btn btn-danger btn-sm" ng-click="deleteSensor(sensorIdData.belongTo,sensorIdData._id)">Confirm Delete</button>
+        </div>
+    </div>

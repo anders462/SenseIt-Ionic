@@ -1,0 +1,71 @@
+
+    <div class="ngdialog-message">
+        <div class="">
+            <h3>Edit Sensor</h3>
+        </div>
+        <div class="">&nbsp;</div>
+        <div class="">
+          <div ng-show="vm.error" class="alert alert-danger">{{vm.errorMessage}}</div>
+            <form class="device-sensor-form" ng-submit="editSensor()" name="sensorForm" novalidate >
+                <div class="form-group" ng-class="{'has-error': sensorForm.sensorName.$invalid && sensorForm.sensorName.$touched}">
+                    <label class="" for="sensorName">Sensor Name</label>
+                    <input type="text" class="form-control input-sm" name="sensorName" id="sensorName" placeholder="Sensor Name" ng-model="sensorIdData.sensorName"  ng-required="true">
+                    <span class="help-block" ng-if="sensorForm.sensorName.$error.required && sensorForm.sensorName.$touched">Sensor Name is required!</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sensorForm.deviceId.$invalid && sensorForm.deviceId.$touched}">
+                  <label class="" for="sensorName">Connected to</label>
+                  <select class="form-control input-sm" name="deviceId" ng-required="true" ng-model="sensorIdData.belongTo">
+                    <option  value="">Connected to device</option>
+                    <option  value="0">Standalone Sensor</option>
+                    <option ng-repeat="device in deviceData" value="{{device._id}}">{{device.deviceName}}</option>
+                  </select>
+                  <span class="help-block" ng-if="sensorForm.deviceId.$error.required && sensorForm.deviceId.$touched">Device is required!</span>
+                </div>
+                <div class="form-group">
+                    <label class="" for="address">Address</label>
+                    <input type="text" class="form-control input-sm" name="country" id="country" placeholder="Country" ng-model="sensorIdData.address.country"  ng-required="false">
+                    <input type="text" class="form-control input-sm" name="city" id="city" placeholder="City" ng-model="sensorIdData.address.city"  ng-required="false">
+                    <input type="text" class="form-control input-sm" name="zipCode" id="zipCode" placeholder="Zip Code" ng-model="sensorIdData.address.zipCode"  ng-required="false">
+                    <input type="text" class="form-control input-sm" name="streetName" id="streetName" placeholder="Street Name" ng-model="sensorIdData.address.streetName"  ng-required="false">
+                    <input type="text" class="form-control input-sm" name="houseNumber" id="houseNumber" placeholder="Street Number" ng-model="sensorIdData.address.houseNumber"  ng-required="false">
+                </div>
+                <div class="form-group">
+                    <label class="" for="address">Sensor Info</label>
+                    <input type="text" class="form-control input-sm" name="Manufacturer" id="sensorManufacturer" placeholder="Manufacturer" ng-model="sensorIdData.sensorInfo.manufacturer"  ng-required="false">
+                    <input type="text" class="form-control input-sm" name="model" id="model" placeholder="Model" ng-model="sensorIdData.sensorInfo.model"  ng-required="false">
+                </div>
+                <div class="form-group" ng-class="{'has-error': sensorForm.sensorType.$invalid && sensorForm.sensorType.$touched}">
+                  <label class="" for="sensorType">Sensor Type</label>
+                  <select class="form-control input-sm" name="sensorType" ng-required="true" ng-model="sensorIdData.sensorType.type" >
+                      <option value="">Sensor type</option>
+                      <option value="Temperature">Temperature</option>
+                      <option value="Humidity">Humidity</option>
+                      <option value="Pressure">Pressure</option>
+                  </select>
+                  <span class="help-block" ng-if="sensorForm.sensorType.$error.required && sensorForm.sensorType.$touched">Sensor Type is required!</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sensorForm.sensorUnit.$invalid && sensorForm.sensorUnit.$touched}">
+                  <label class="" for="sensorName">Sensor Unit</label>
+                  <select class="form-control input-sm" name="sensorUnit" ng-required="true" ng-model="sensorIdData.sensorType.units" >
+                      <option value="">Sensor Unit</option>
+                      <option value="C">Deg Celcius</option>
+                      <option value="F">Deg Farenheit</option>
+                      <option value="%">Percentage (%)</option>
+                      <option value="mbar">Millibar</option>
+                      <option value="kPa">Kilo Pascal</option>
+                  </select>
+                  <span class="help-block" ng-if="sensorForm.sensorUnit.$error.required && sensorForm.sensorUnit.$touched">Sensor Type is required!</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="address">Sensor Image</label>
+                    <input type="text" class="form-control input-sm" name="sensorImage" id="sensorImage" placeholder="sensorImage" ng-model="sensorIdData.sensorImage"  ng-required="false">
+                </div>
+                <button type="submit" class="btn btn-info btn-sm" ng-disabled="sensorForm.$invalid">Save Device</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click=closeThisDialog()>Cancel</button> &nbsp; &nbsp;
+            </form>
+        </div>
+        <div>
+
+        </div>
+    </div>

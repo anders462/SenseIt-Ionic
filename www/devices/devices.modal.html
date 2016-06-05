@@ -1,0 +1,33 @@
+
+    <div class="ngdialog-message">
+        <div class="">
+            <h3>{{deviceTitle}} </h3>
+        </div>
+        <div class="">&nbsp;</div>
+        <div class="">
+          <div ng-show="vm.error" class="alert alert-danger">{{vm.errorMessage}}</div>
+            <form ng-submit="vm.addDevice()" name="deviceForm" novalidate >
+                <div class="form-group" ng-class="{'has-error': deviceForm.deviceName.$invalid && deviceForm.deviceName.$touched}">
+                    <label class="sr-only" for="deviceName">Device Name</label>
+                    <input type="text" class="form-control input-sm" name="deviceName" id="deviceName" placeholder="Device Name" ng-model="vm.deviceData.deviceName" ng-required="true">
+                    <span class="help-block" ng-if="deviceForm.deviceName.$error.required && deviceForm.deviceName.$touched">Device Name is required!</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': deviceForm.deviceType.$invalid && deviceForm.deviceType.$touched}">
+                  <select class="form-control input-sm" name="deviceType" ng-required="true" ng-model="vm.deviceData.deviceType">
+                      <option value="">Device type and model</option>
+                      <option value="Raspberry PI, Pi 3 Model B">Raspberry PI, Pi 3 Model B</option>
+                      <option value="Raspberry PI, Pi 2 Model B">Raspberry PI, Pi 2 Model B</option>
+                      <option value="Raspberry PI, Pi 1 Model B+">Raspberry PI, Pi 1 Model B+</option>
+                      <option value="Raspberry PI, Pi 1 Model A+">Raspberry PI, Pi 1 Model A+</option>
+                      <option value="Raspberry PI, Pi Zero">Raspberry PI, Pi Zero</option>
+                  </select>
+                  <span class="help-block" ng-if="deviceForm.deviceType.$error.required && deviceForm.deviceType.$touched">Device Type is required!</span>
+                </div>
+                <button type="submit" class="btn btn-info btn-sm" ng-disabled="deviceForm.$invalid">Save Device</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click=vm.closeThisDialog()>Cancel</button> &nbsp; &nbsp;
+            </form>
+        </div>
+        <div>
+
+        </div>
+    </div>

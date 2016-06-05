@@ -1,0 +1,52 @@
+<div class="ngdialog-message">
+        <div class="">
+            <h3>Register</h3>
+        </div>
+        <div class="">&nbsp;</div>
+
+        <div class="row">
+          <div ng-show="vm.error" class="alert alert-danger">{{vm.errorMessage}}</div>
+            <form ng-submit="vm.doRegister()" name="registrationForm" novalidate>
+              <div class="col-sm-6">
+                <div class="form-group" ng-class="{'has-error': registrationForm.username.$invalid && registrationForm.username.$touched}">
+                    <label class="sr-only" for="username">Username</label>
+                    <input type="text" class="form-control input-sm" name="username" id="username" placeholder="Username" ng-model="vm.registration.username" ng-required="vm.shouldValidate('username')"
+                     ng-minlength="vm.shouldValidate('username_len')">
+                    <span class="help-block" ng-if="registrationForm.username.$error.minlength && registrationForm.username.$touched">Min 3 character Username is required!</span>
+                    <span class="help-block" ng-if="registrationForm.username.$error.required && registrationForm.username.$touched">Username is required!</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error':registrationForm.password.$touched && registrationForm.password.$invalid}">
+                    <label class="sr-only" for="password">Password</label>
+                    <input type="password" class="form-control input-sm" name="password" id="password" placeholder="Password" ng-model="vm.registration.password"
+                    ng-required="vm.shouldValidate('password')" ng-minlength="vm.shouldValidate('password_len')">
+                    <span class="help-block" ng-show="registrationForm.password.$touched && registrationForm.password.$invalid">Min 8 character Password is required!</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': registrationForm.email.$invalid && registrationForm.email.$touched}">
+                    <label class="sr-only" for="email">Email</label>
+                    <input type="email" class="form-control input-sm" name="email" id="email" placeholder="Email" ng-model="vm.registration.email" ng-required="vm.shouldValidate('email')">
+                    <span class="help-block" ng-show="registrationForm.email.$invalid && registration.email.$touched">Valid email is required!</span>
+                </div>
+        </div>
+          <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="sr-only" for="firstname">First Name</label>
+                    <input type="text" class="form-control input-sm" id="firstname" placeholder="First Name" ng-model="vm.registration.firstname" ng-required="vm.shouldValidate('firstname')">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="lastname">Last Name</label>
+                    <input type="text" class="form-control input-sm" id="lastname" placeholder="Last Name" ng-model="vm.registration.lastname" ng-required="vm.shouldValidate('lastname')">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="vm.registration.rememberMe"> Remember me
+                    </label>
+                </div>
+          </div>
+          <div class="col-sm-12">
+                <button type="submit" class="btn btn-info btn-sm" ng-disabled="registrationForm.$invalid">Register</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click=vm.closeThisDialog()>Cancel</button>
+                <a ng-click=vm.openLogin()>Click here to Login</a>
+          </div>
+            </form>
+      </div>
+    </div>
