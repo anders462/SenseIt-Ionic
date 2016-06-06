@@ -9,32 +9,22 @@ angular
 
   configFunction.$inject = ['$stateProvider'];
 
-  function configFunction($stateProvider){
+        function configFunction($stateProvider){
 
-    $stateProvider.state('app.devices', {
-          url: 'devices',
+          $stateProvider.state('app.devices', {
+          url: '/devices',
           views: {
-            'header': {
-                templateUrl: 'app/common/header.html'
-            },
-            'content@': {
-               templateUrl: 'app/dashboard/dashboard.html',
-               controller:  'DeviceController',
-               controllerAs: 'vm'
-            },
-            'footer' : {
-              templateUrl: 'app/common/footer.html'
+            'mainContent': {
+              templateUrl: 'dashboard/dashboard.html',
+              controller: 'DeviceController as vm'
             }
           },
-          data : {
-            authenticate: true  //TRUE in non testing mode
-          }
-
+          data : {authenticate: true
+             }
         });
 
 
-
-      }
+      };
 
 
 

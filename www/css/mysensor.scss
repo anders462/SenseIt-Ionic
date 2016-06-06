@@ -1,7 +1,67 @@
 $primary-color: #ffffff;
-$footer-color: #05264d;
+$secondary-color: #05264d;
+$modal-background: #444;
 
+ // #11c1f3 calm
+ // #387ef5 positive
+ //#444 dark
 
+.mymodal .modal {
+    min-height: 0 !important;
+    border-radius:3% !important;
+    background-color: $modal-background;
+    ion-header-bar {
+      background-color: $modal-background;
+    }
+
+    h1 {
+      color: white;
+    }
+
+    ion-content {
+      label {
+        background-color: $modal-background !important;
+        span { color: white !important;
+        }
+
+        input {
+          color: white;
+        }
+      }
+    }
+}
+
+.button {
+  font-weight: bold;
+}
+
+.login-modal {
+    width: 90%;
+    height: 50%;
+    top: 20%;
+    bottom: 20%;
+    right: 5%;
+    left: 5%;
+
+}
+
+.register-modal {
+    width: 90%;
+    height: 80%;
+    top: 10%;
+    bottom: 20%;
+    right: 5%;
+    left: 5%;
+}
+
+.logout-modal {
+    width: 70%;
+    height: 2%;
+    top: 30%;
+    bottom: 30%;
+    right: 15%;
+    left: 15%;
+}
 
 body {
  background-color: white;
@@ -11,14 +71,6 @@ body {
   color: red;
 }
 
-.login-modal {
-  background-color: blue;
-}
-/* Remove the navbar's default margin-bottom and rounded borders */
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
-}
 
 /* Add a gray background color and some padding to the footer */
 footer {
@@ -66,16 +118,20 @@ input {
 }
 
 .dashboard {
-  font-size:2em;
-  margin-bottom:30px;
+  font-size:1.5em;
+  margin-bottom:2%;
+  color: black;
+}
+
+.status-panel {
+  border-top: solid 1px gray;
 }
 
 .box {
   color: white;
   padding: 10px;
-  // width-min: 150px;
-  margin-bottom: 15px;
-  height: 100px;
+  margin-bottom: 1%;
+  height: 10%;
 }
 
 .box.devices {
@@ -115,18 +171,19 @@ input {
 }
 
 .title {
-    position: absolute;
-    bottom: 8px;
-    right: 20px;
-    font-size: 14px;
+    // position: absolute;
+    // bottom: 8px;
+    // right: 20px;
+    font-size: 1em;
     font-family: arial;
+    color:white;
   }
 
   .circle {
-    position: absolute;
-      top: 8px;
-      right: 30px;
-      font-size: 20px;
+    // position: absolute;
+    //   top: 8px;
+    //   right: 30px;
+      font-size: 1.5em;
       font-family: arial;
   }
 
@@ -260,7 +317,7 @@ h4 {
 .example-box {
   padding-top: 30px;
   color:white;
-  background-color:$footer-color;
+  background-color:$secondary-color;
   height:400px;
   font-weight: bold;
 

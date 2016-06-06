@@ -9,7 +9,7 @@ angular
 
   ActivateController.$inject = [
   '$location',
-  'ngDialog',
+  '$ionicModal',
   '$scope',
   'activateFactory',
   'authFactory',
@@ -17,7 +17,7 @@ angular
 ];
 
 
-  function ActivateController($location,ngDialog, $scope, activateFactory,authFactory,mqttFactory){
+  function ActivateController($location,$ionicModal, $scope, activateFactory,authFactory,mqttFactory){
 
   var vm = this; //set vm (view model) to reference main object
   vm.error = false;
@@ -36,26 +36,26 @@ angular
     };
 
     //if customer is already activated try to connect to mqtt service
+    console.log("activated from ac controller", vm.activated);
     if(vm.activated){
       vm.connectMqtt();
     }
-
 
 
     vm.openActivationModal = function(){
       $scope.activateTitle ="MQTT Account Settings";
       console.log("open Activate")
 
-        ngDialog.open({
-           template: 'app/activate/activate.modal.html',
-           className: 'ngdialog-theme-default',
-           controller: 'ActivateController',
-           controllerAs: 'vm',
-           showClose: false,
-           scope: $scope,
-           closeByNavigation: true,
-           closeByEscape: false
-        });
+        // ngDialog.open({
+        //    template: 'app/activate/activate.modal.html',
+        //    className: 'ngdialog-theme-default',
+        //    controller: 'ActivateController',
+        //    controllerAs: 'vm',
+        //    showClose: false,
+        //    scope: $scope,
+        //    closeByNavigation: true,
+        //    closeByEscape: false
+        // });
     };
 
 ///ADD MIN PASSWORD LENGTH of 8
@@ -108,12 +108,12 @@ angular
     }
 
     vm.closeThisDialog = function(){
-      ngDialog.close();
+      // ngDialog.close();
       $location.path('/dashboard');
     }
 
     vm.goToDashboard = function(){
-      ngDialog.close();
+      // ngDialog.close();
       $location.path('/dashboard');
     }
 

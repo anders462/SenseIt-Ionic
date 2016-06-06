@@ -9,17 +9,22 @@
       </div>
     </div>
     <div class="row">
-      <div class="col text-center">
-        <button class="button  button-balanced">
+      <div class="col text-center" ng-controller="AuthController as vm">
+        <button class="button  button-balanced" ng-click="vm.register()">
         Get Started
       </button>
       </div>
     </div>
 
     <div class="row">
-      <div class="col text-center">
-        <button class="button  button-energized">
+      <div class="col text-center" ng-show="vm.loggedIn()">
+        <button class="button  button-energized" ng-click="vm.goToDashboard()">
         Go to Dashboard
+       </button>
+      </div>
+			<div class="col text-center" ng-show="!vm.loggedIn()" >
+        <button ng-controller="AuthController as vm" class="button  button-energized" ng-click="vm.login()">
+        Login
        </button>
       </div>
     </div>
@@ -46,36 +51,7 @@
 	</div>
 
   </ion-content>
-	<div class="bar bar-footer bar-positive">
+	<div class="bar bar-footer bar-dark">
     <div class="title">SenseIt</div>
   </div>
 </ion-view>
-
-
-
-<!-- <div class="container-fluid">
-
-  <div class="row main text-center">
-     <h1> SenseIt <small>your sensor connected</small></h1>
-     <button type="button" name="button" class="btn btn-success btn-lg" ng-click="vm.getStarted()">Get Started</button></br>
-     <a type="button" name="button" class="btn btn-warning btn-lg" ui-sref="app.dashboard">Go to DashBoard</a></br>
-  </div>
-  <div class="row text-center example-box">
-    <div class="col-xs-4">
-      <p>Your Sensors</p>
-      <i class="fa fa-wifi" aria-hidden="true"></i>
-    </div>
-    <div class="col-xs-4">
-      <p>Web App</p>
-      <i class="fa fa-desktop" aria-hidden="true"></i>
-    </div>
-    <div class="col-xs-4">
-      <p>Mobile App</p>
-      <i class="fa fa-mobile" aria-hidden="true"></i>
-    </div>
-    <div class="col-xs-12">
-      <h3>Monitor your remote Sensors from any device!
-    </div>
-
-  </div>
-</div> -->

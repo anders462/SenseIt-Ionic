@@ -1,16 +1,50 @@
+.mymodal .modal {
+  min-height: 0 !important;
+  border-radius: 3% !important;
+  background-color: #444; }
+  .mymodal .modal ion-header-bar {
+    background-color: #444; }
+  .mymodal .modal h1 {
+    color: white; }
+  .mymodal .modal ion-content label {
+    background-color: #444 !important; }
+    .mymodal .modal ion-content label span {
+      color: white !important; }
+    .mymodal .modal ion-content label input {
+      color: white; }
+
+.button {
+  font-weight: bold; }
+
+.login-modal {
+  width: 90%;
+  height: 50%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+
+.register-modal {
+  width: 90%;
+  height: 80%;
+  top: 10%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+
+.logout-modal {
+  width: 70%;
+  height: 2%;
+  top: 30%;
+  bottom: 30%;
+  right: 15%;
+  left: 15%; }
+
 body {
   background-color: white; }
 
 .alert {
   color: red; }
-
-.login-modal {
-  background-color: blue; }
-
-/* Remove the navbar's default margin-bottom and rounded borders */
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0; }
 
 /* Add a gray background color and some padding to the footer */
 footer {
@@ -42,14 +76,18 @@ input {
   color: gray; }
 
 .dashboard {
-  font-size: 2em;
-  margin-bottom: 30px; }
+  font-size: 1.5em;
+  margin-bottom: 2%;
+  color: black; }
+
+.status-panel {
+  border-top: solid 1px gray; }
 
 .box {
   color: white;
   padding: 10px;
-  margin-bottom: 15px;
-  height: 100px; }
+  margin-bottom: 1%;
+  height: 10%; }
 
 .box.devices {
   background-color: #F44336;
@@ -80,17 +118,12 @@ input {
   margin-bottom: 20px; }
 
 .title {
-  position: absolute;
-  bottom: 8px;
-  right: 20px;
-  font-size: 14px;
-  font-family: arial; }
+  font-size: 1em;
+  font-family: arial;
+  color: white; }
 
 .circle {
-  position: absolute;
-  top: 8px;
-  right: 30px;
-  font-size: 20px;
+  font-size: 1.5em;
   font-family: arial; }
 
 .form-group .help-block {

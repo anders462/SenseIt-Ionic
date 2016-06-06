@@ -14,18 +14,17 @@ angular
   //Own Modules
   'SenseIt.core',
   'SenseIt.home',
-  // 'SenseIt.register',
-  'SenseIt.login',
-  'SenseIt.dashboard'
-  // 'SenseIt.devices',
-  // 'SenseIt.sensors',
-  // 'SenseIt.activate',
-  // 'SenseIt.logout'
+  'SenseIt.auth',
+  'SenseIt.dashboard',
+  'SenseIt.devices',
+  'SenseIt.sensors',
+  'SenseIt.activate'
 
 ])
 .run(preparePlatform)
 .config(configFunction)
 .constant("BASE_URL", "http://192.168.1.70:8001/")
+.run(stateAuthenticate);
 
 //PREPARE IONIC PLATFORM
 preparePlatform.$inject = ['$ionicPlatform'];
@@ -56,39 +55,111 @@ function configFunction($stateProvider, $urlRouterProvider) {
                 url: '/app',
                 abstract: true,
                 templateUrl: 'common/sidebar.html',
-                controller: 'AppCtrl'
+                controller: 'AppCtrl as vm',
+                data : {authenticate: false
+                   }
               })
               .state('app.about', {
                      url: '/about',
                      views: {
                     'mainContent': {
                       templateUrl: 'common/about.html',
-                      controller: 'AppCtrl',
-                      controllerAs: 'vm'
+                      controller: 'AppCtrl as vm',
                    }
-                 }
+                 },
+                 data : {authenticate: false
+                    }
                })
                .state('app.resources', {
                       url: '/resources',
                       views: {
                      'mainContent': {
                        templateUrl: 'common/resources.html',
-                       controller: 'AppCtrl',
-                       controllerAs: 'vm'
+                       controller: 'AppCtrl as vm',
                     }
-                  }
+                  },
+                  data : {authenticate: false
+                     }
                 })
                 .state('app.support', {
                        url: '/support',
                        views: {
                       'mainContent': {
                         templateUrl: 'common/support.html',
-                        controller: 'AppCtrl',
-                        controllerAs: 'vm'
+                        controller: 'AppCtrl as vm'
                      }
-                   }
+                   },
+                   data : {authenticate: false
+                      }
                  })
+                 .state('app.login', {
+                        url: '/login',
+                        views: {
+                       'mainContent': {
+                         templateUrl: 'common/login.html',
+                         controller: 'AppCtrl as vm'
+                      }
+                    },
+                    data : {authenticate: false
+                       }
+                  })
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 };
+
+stateAuthenticate.$inject = ['$rootScope', '$state', 'authFactory'];
+
+function stateAuthenticate($rootScope, $state, authFactory){
+
+  authFactory.isAuthenticated()
+  .then(function(resp){
+    console.log("isAuthenticated resp", true);
+    authFactory.cacheAuthState(true);
+  })
+  .catch(function(err){
+    authFactory.cacheAuthState(false);
+    console.log("isAuthenticated resp", false);
+  });
+
+  $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+    console.log("tostate", toState.data.authenticate);
+    console.log("authState",authFactory.getAuthState());
+    console.log("if statement",toState.data.authenticate && !authFactory.getAuthState())
+    if (toState.data.authenticate && !authFactory.getAuthState()){
+      // User isn’t authenticated
+      console.log('transition to', toState);
+      $state.transitionTo("app.home");
+      event.preventDefault();
+    }
+  });
+
+  // // .fromTemplateUrl() method
+  // $ionicPopover.fromTemplateUrl('templates/dish-detail-popover.html', {
+  //   scope: $scope
+  // }).then(function(popover) {
+  //   $scope.popover = popover;
+  // });
+
+
+  // $scope.openPopover = function($event) {
+  //   $scope.popover.show($event);
+  // };
+  // $scope.closePopover = function() {
+  //  $scope.popover.hide();
+  // };
+  // //Cleanup the popover when we're done with it!
+  // $scope.$on('$destroy', function() {
+  //   $scope.popover.remove();
+  // });
+  // // Execute action on hide popover
+  // $scope.$on('popover.hidden', function() {
+  //   // Execute action
+  // });
+  // // Execute action on remove popover
+  // $scope.$on('popover.removed', function() {
+  //   // Execute action
+  // });
+
+}

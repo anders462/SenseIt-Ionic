@@ -9,14 +9,14 @@ angular
 
   DeviceController.$inject = [
   '$location',
-  'ngDialog',
+  '$ionicModal',
   '$scope',
   'deviceFactory',
   'authFactory',
   '$rootScope'
 ];
 
-  function DeviceController($location,ngDialog,$scope, deviceFactory, authFactory){
+  function DeviceController($location,$ionicModal,$scope, deviceFactory, authFactory){
 
   var vm = this; //set vm (view model) to reference main object
   vm.error = false;
@@ -35,43 +35,43 @@ angular
 
     vm.openDeviceModal = function(title){
       $scope.deviceTitle = title || "Add New Device";
-      console.log("open Device")
-        ngDialog.open({
-           template: 'app/devices/devices.modal.html',
-           className: 'ngdialog-theme-default',
-           controller: 'DeviceController',
-           controllerAs: 'vm',
-           showClose: false,
-           scope: $scope,
-           closeByNavigation: true,
-           closeByEscape: false
-        })
+      // console.log("open Device")
+      //   ngDialog.open({
+      //      template: 'app/devices/devices.modal.html',
+      //      className: 'ngdialog-theme-default',
+      //      controller: 'DeviceController',
+      //      controllerAs: 'vm',
+      //      showClose: false,
+      //      scope: $scope,
+      //      closeByNavigation: true,
+      //      closeByEscape: false
+      //   })
     }
 
     vm.openDeviceEditModal = function(deviceId){
     getCachedDeviceId(deviceId);
     console.log($scope.deviceIdData)
-        ngDialog.open({
-           template: 'app/devices/devices.edit.modal.html',
-           className: 'ngdialog-theme-default',
-           showClose: false,
-           scope:$scope,
-           closeByNavigation: true,
-           closeByEscape: false
-        })
+        // ngDialog.open({
+        //    template: 'app/devices/devices.edit.modal.html',
+        //    className: 'ngdialog-theme-default',
+        //    showClose: false,
+        //    scope:$scope,
+        //    closeByNavigation: true,
+        //    closeByEscape: false
+        // })
     }
 
     vm.openDeviceDeleteModal = function(deviceId){
       console.log("open device",deviceId)
       getCachedDeviceId(deviceId);
-        ngDialog.open({
-           template: 'app/devices/devices.delete.modal.html',
-           className: 'ngdialog-theme-default',
-           showClose: false,
-           scope:$scope,
-           closeByNavigation: true,
-           closeByEscape: false
-        })
+        // ngDialog.open({
+        //    template: 'app/devices/devices.delete.modal.html',
+        //    className: 'ngdialog-theme-default',
+        //    showClose: false,
+        //    scope:$scope,
+        //    closeByNavigation: true,
+        //    closeByEscape: false
+        // })
     }
 
     vm.addDevice = function(){
@@ -82,7 +82,7 @@ angular
           ngDialog.close();
           vm.error = false;
           deviceFactory.notify();
-          console.log(response.data);        
+          console.log(response.data);
         })
         .catch(function(err){
           if(err.status == 500){
@@ -140,7 +140,7 @@ angular
 
 
     vm.closeThisDialog = function(){
-      ngDialog.close();
+      // ngDialog.close();
       $location.path('/dashboard');
     }
 

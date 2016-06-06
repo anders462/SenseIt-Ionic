@@ -16,35 +16,14 @@ angular
     views: {
       'mainContent': {
         templateUrl: 'dashboard/dashboard.html',
-        controller: 'DashboardController'
+        controller: 'DashboardController as vm'
       }
-    }
-  })
+    },
+    data : {authenticate: true
+       }
+  });
 
-    // $stateProvider.state('app.dashboard', {
-    //       url: 'dashboard',
-    //       views: {
-    //         'header': {
-    //             templateUrl: 'app/common/header.html'
-    //         },
-    //         'content@': {
-    //            templateUrl: 'dashboard/dashboard.html',
-    //            controller:  'DashboardController',
-    //            controllerAs: 'vm'
-    //         },
-    //         'footer' : {
-    //           templateUrl: 'app/common/footer.html'
-    //         }
-    //       },
-    //       data : {
-    //         authenticate: true
-    //       }
-    //
-    //     });
-
-
-
-      }
+};
 
 
 

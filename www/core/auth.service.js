@@ -18,7 +18,7 @@ angular
 
       // Returns register resource
       var register = function(creds) {
-        console.log(creds);
+        console.log("creds",creds);
         return $http.post(BASE_URL +'users/register',creds);
       }
 

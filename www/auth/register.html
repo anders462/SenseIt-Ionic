@@ -1,0 +1,51 @@
+<div class="mymodal">
+<ion-modal-view class="register-modal">
+  <ion-header-bar>
+    <h1 class="title">Register</h1>
+    <div class="buttons">
+      <button class="button button-outline button-stable" ng-click="vm.closeRegister()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content >
+      <form ng-submit="vm.doRegister()" name="vm.registerForm" novalidate >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" class="" name="username" id="username" placeholder="Username" ng-model="vm.registerData.username" ng-required="vm.shouldValidate('username')"
+          ng-minlength="vm.shouldValidate('username_len')">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" class="" name="password" id="password" placeholder="Password" ng-model="vm.registerData.password"
+          ng-required="vm.shouldValidate('password')" ng-minlength="vm.shouldValidate('password_len')">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="email" class="" name="email" id="email" placeholder="Email" ng-model="vm.registerData.email" ng-required="vm.shouldValidate('email')">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" class="" id="firstname" placeholder="First Name" ng-model="vm.registerData.firstname" ng-required="vm.shouldValidate('firstname')">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text" class="" id="lastname" placeholder="Last Name" ng-model="vm.registerData.lastname" ng-required="vm.shouldValidate('lastname')">
+        </label>
+        <div class="padding alert">
+            <p ng-show="vm.error" >* {{vm.errorMessage}}</p>
+            <p ng-show="vm.registerForm.username.$error.minlength && vm.registerForm.username.$dirty">* Min 3 character Username is required!</p>
+            <p ng-show="vm.registerForm.username.$error.required && vm.registerForm.username.$dirty">* Username is required!</p>
+            <p ng-show="vm.registerForm.password.$error.required && vm.registerForm.password.$dirty">* Password is required!</p>
+            <p ng-show="vm.registerForm.password.$touched && vm.registerForm.password.$invalid">* Min 8 character Password is required!</p>
+            <p ng-show="vm.registerForm.email.$invalid && vm.registerForm.email.$touched">* Valid email is required!</p>
+        </div>
+        <label class="">
+          <button type="submit" class="button button-block button-positive" ng-disabled="registerForm.$invalid">Register</button>
+        </label>
+      </div>
+    </form>
+    <button class="button button-block button-balanced" ng-click="vm.login()">Go to Login</button>
+
+  </ion-content>
+</ion-modal-view>
+</div>

@@ -16,14 +16,14 @@ angular
     views: {
       'mainContent': {
         templateUrl: 'home/home.html',
-        controller: 'HomeController'
+        controller: 'HomeController as vm'
       }
-    }
+    },
+    data : {authenticate: false
+       }
   })
 
-
-
-      }
+}
 
 
 

@@ -9,13 +9,13 @@ angular
 
   SensorController.$inject = [
     '$location',
-    'ngDialog',
+    '$ionicModal',
     '$scope',
     'sensorFactory',
     'deviceFactory',
     'authFactory'];
 
-  function SensorController($location,ngDialog,$scope, sensorFactory, deviceFactory,authFactory){
+  function SensorController($location,$ionicModal,$scope, sensorFactory, deviceFactory,authFactory){
 
   var vm = this; //set vm (view model) to reference main object
   $scope.error = false;
@@ -51,41 +51,41 @@ angular
       console.log("cashed",$scope.deviceData);
       $scope.sensorTitle = title || "Add New Sensor";
       console.log("open Sensor")
-        ngDialog.open({
-           template: 'app/sensors/sensors.modal.html',
-           className: 'ngdialog-theme-default',
-           showClose: false,
-           scope: $scope,
-           closeByNavigation: true,
-           closeByEscape: false
-        })
+        // ngDialog.open({
+        //    template: 'app/sensors/sensors.modal.html',
+        //    className: 'ngdialog-theme-default',
+        //    showClose: false,
+        //    scope: $scope,
+        //    closeByNavigation: true,
+        //    closeByEscape: false
+        // })
     }
 
     vm.openSensorEditModal = function(sensorId){
       getCachedSensorId(sensorId);
       getCachedDevices();
       console.log($scope.sensorIdData)
-          ngDialog.open({
-             template: 'app/sensors/sensors.edit.modal.html',
-             className: 'ngdialog-theme-default',
-             showClose: false,
-             scope:$scope,
-             closeByNavigation: true,
-             closeByEscape: false
-          })
+          // ngDialog.open({
+          //    template: 'app/sensors/sensors.edit.modal.html',
+          //    className: 'ngdialog-theme-default',
+          //    showClose: false,
+          //    scope:$scope,
+          //    closeByNavigation: true,
+          //    closeByEscape: false
+          // })
     }
 
 vm.openSensorDeleteModal = function(sensorId){
       console.log("open sensor",sensorId)
       getCachedSensorId(sensorId);
-        ngDialog.open({
-           template: 'app/sensors/sensor.delete.modal.html',
-           className: 'ngdialog-theme-default',
-           showClose: false,
-           scope:$scope,
-           closeByNavigation: true,
-           closeByEscape: false
-        })
+        // ngDialog.open({
+        //    template: 'app/sensors/sensor.delete.modal.html',
+        //    className: 'ngdialog-theme-default',
+        //    showClose: false,
+        //    scope:$scope,
+        //    closeByNavigation: true,
+        //    closeByEscape: false
+        // })
     }
 
     $scope.addSensor = function(sensorData,deviceId){

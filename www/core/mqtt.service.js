@@ -19,6 +19,7 @@ function mqttFactory ($http, $window, $rootScope, authFactory){
 var mqttData = {};
 
  var createMqttClient = function() {
+   console.log("createMqttClient");
   //NEED TO ENCRYPT MQTT password
   //Gets credentials for mqtt account
    authFactory.getMe()

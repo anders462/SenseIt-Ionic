@@ -1,85 +1,92 @@
 
-<ion-view view-title="Dashbard">
+<ion-view view-title="Dashboard">
   <ion-content>
-    <h1>Dashboard</h1>
-  </ion-content>
+    <div class="row" ng-controller="ActivateController as actCtrl">
+      <div class="col text-center">
+          <h5 class="dashboard">Dashboard </h5>
+     </div>
+   </div>
+   <div class='row status-panel'>
+      <div class="col text-center">
+          <h5 class="">Account Name</h5>
+          <p>{{vm.currentUser}}</p>
+     </div>
+     <div class="col text-center">
+         <h5 class="">MQTT Status</h5>
+         <p ng-show="vm.activated" class="beacon"></p>
+         <p ng-show="!vm.activated" class="beacon deactive"></p>
+    </div>
+    <div class="col text-center">
+        <h5 ng-show="!vm.activated" class="">Activate</h5>
+        <h5 ng-show="vm.activated" class="">Deactivate</h5>
+        <label class="toggle">
+          <input type="checkbox">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+          <!-- <button class="btn btn-sm btn-success" ng-click="actCtrl.openActivationModal()"> Active/Deactivate</button> -->
+
+       </label>
+     </div>
+    </div>
+        <div class="row">
+          <div class="col">
+            <div class="box devices" ng-controller="DeviceController as devCtrl" >
+              <!-- <i class="fa fa-database" aria-hidden="true"></i> -->
+              <p class="title">DEVICES</p>
+              <p class="circle">{{vm.deviceData.length}}</p>
+              <div class="plus-list">
+                <!-- <span class="glyphicon glyphicon-plus" ng-click="devCtrl.openDeviceModal()"><small>ADD</small></span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" ng-controller="SensorController as senCtrl">
+            <div class="box sensors">
+              <!-- <i class="fa fa-database" aria-hidden="true"></i> -->
+              <p class="title">SENSORS</p>
+              <p class="circle">{{vm.sensorData.length}}</p>
+              <div class="plus-list">
+                <!-- <span class="glyphicon glyphicon-plus" ng-click="senCtrl.openSensorModal()"><small>ADD</small></span> -->
+              </div>
+            </div>
+          </div>
+       </div>
+        <div class="row">
+          <div class="col">
+            <div class="box messages">
+              <!-- <i class="fa fa-database" aria-hidden="true"></i> -->
+              <p class="title">MESSAGES</p>
+              <p class="circle">{{vm.messages}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="box alarms">
+              <!-- <i class="fa fa-bell" aria-hidden="true"></i> -->
+              <p class="title">ALARMS</p>
+              <p class="circle">0</p>
+              <div class="plus-list">
+                <!-- <span class="glyphicon glyphicon-plus" ng-click="devCtrl.openDeviceModal()"><small>ADD</small></span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <div id="chart-container"></div>
+            </div>
+        </div>
+  </ion-content>  <div class="bar bar-footer bar-dark">
+    <div class="title">SenseIt</div>
+    </div>
 </ion-view>
 
-<!-- <div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class=" text-center">
-        <h4 class="dashboard">Dashboard&nbsp<i class="fa fa-tachometer" aria-hidden="true"></i>
-        </h4>
-      </div>
-  </div>
-    </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="box devices" ng-controller="DeviceController as devCtrl" >
-            <i class="fa fa-database" aria-hidden="true"></i>
-            <p class="title">DEVICES</p>
-            <p class="circle">{{vm.deviceData.length}}</p>
-            <div class="plus-list">
-              <span class="glyphicon glyphicon-plus" ng-click="devCtrl.openDeviceModal()"><small>ADD</small></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3" ng-controller="SensorController as senCtrl">
-          <div class="box sensors">
-            <i class="fa fa-database" aria-hidden="true"></i>
-            <p class="title">SENSORS</p>
-            <p class="circle">{{vm.sensorData.length}}</p>
-            <div class="plus-list">
-              <span class="glyphicon glyphicon-plus" ng-click="senCtrl.openSensorModal()"><small>ADD</small></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="box messages">
-            <i class="fa fa-database" aria-hidden="true"></i>
-            <p class="title">MESSAGES</p>
-            <p class="circle">{{vm.messages}}</p>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="box alarms">
-            <i class="fa fa-bell" aria-hidden="true"></i>
-            <p class="title">ALARMS</p>
-            <p class="circle">0</p>
-            <div class="plus-list">
-              <span class="glyphicon glyphicon-plus" ng-click="devCtrl.openDeviceModal()"><small>ADD</small></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-          <div class="col-sm-6">
-            <div id="chart-container"></div>
-          </div>
-          <div class="col-sm-6">
-            <div class="box-account" >
-              <table class="table table-bordered" ng-controller="ActivateController as actCtrl">
-                <caption>MQTT Account</caption>
-                <thead>
-                  <tr>
-                    <th>Account Name</th>
-                    <th>Status</th>
-                    <th>Settings</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{vm.currentUser}}</td>
-                  <td>
-                    <p ng-show="vm.activated" class="beacon"></p>
-                    <p ng-show="!vm.activated" class="beacon deactive"></p>
-                  </td>
-                  <td><button class="btn btn-sm btn-success" ng-click="actCtrl.openActivationModal()"> Active/Deactivate</button></td>
-              </tr>
-              </tbody>
-          </table>
-         </div>
+
+<!--
+
          <div class="well">
            Tip!!
            To send a MQTT message from a sensor use the following format:

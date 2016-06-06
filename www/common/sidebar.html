@@ -34,10 +34,13 @@
         <ion-item class="item-divider">
           Services
         </ion-item>
-        <ion-item ng-controller="LoginController as vm"menu-close ng-click="vm.login()">
+        <ion-item ng-controller="AuthController as vm" menu-close ng-click="vm.login()">
           Login
         </ion-item>
-        <ion-item menu-close ng-click="logout()">
+        <ion-item ng-controller="AuthController as vm" menu-close ng-click="vm.register()">
+          Register
+        </ion-item>
+        <ion-item ng-controller="AuthController as vm" menu-close ng-click="vm.logout()">
           Logout
         </ion-item>
       </ion-list>
