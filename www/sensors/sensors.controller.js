@@ -13,26 +13,30 @@ angular
     '$scope',
     'sensorFactory',
     'deviceFactory',
-    'authFactory'];
+    'authFactory',
+    'activateFactory'
+  ];
 
-  function SensorController($location,$ionicModal,$scope, sensorFactory, deviceFactory,authFactory){
+  function SensorController($location,$ionicModal,$scope, sensorFactory, deviceFactory,authFactory,activateFactory){
 
   var vm = this; //set vm (view model) to reference main object
-  $scope.error = false;
-  $scope.sensorCreated = false;
+  vm.error = false;
+  vm.sensorCreated = false;
   vm.activated = authFactory.getCurrentUser().activated;
-  $scope.sensorIdData = {};
-  $scope.deviceData = [];
+  vm.sensorIdData = {};
+  vm.deviceData = [];
   vm.oldDeviceid="";
-  $scope.sensorTopic ="";
-  $scope.deviceId = "";
+  vm.sensorTopic ="";
+  vm.deviceId = "";
+  vm.currentUser = authFactory.getCurrentUser().username;
+
 
   var getCachedSensorId = function(sensorId){
     vm.sensorData = sensorFactory.getCachedSensors();
     vm.sensorData.forEach(function(sensor){
       if(sensor._id == sensorId){
         console.log("cached sensorId", sensor)
-        $scope.sensorIdData = sensor;
+        vm.sensorIdData = sensor;
         vm.oldDeviceid = sensor.belongTo;
 
       }
@@ -40,26 +44,63 @@ angular
   }
 
   var getCachedDevices = function(){
-    $scope.deviceData = deviceFactory.getCachedDevices();
+    vm.deviceData = deviceFactory.getCachedDevices();
+  };
+
+  // Create the sensor modal that we will use later
+  $ionicModal.fromTemplateUrl('sensors/sensors.add.html', {
+    scope: $scope
+   }).then(function(modal) {
+    console.log("create sensor Modal");
+    vm.sensorAddModal = modal;
+   }).catch(function(err){
+    console.log(err);
+  });
+
+  // Create the sensor delete modal that we will use later
+  $ionicModal.fromTemplateUrl('sensors/sensors.delete.html', {
+    scope: $scope
+  }).then(function(modal) {
+    console.log("create delete Modal");
+    vm.sensorDeleteModal = modal;
+  }).catch(function(err){
+    console.log(err);
+  });
+
+  // Triggered in the sensor delete modal to close it
+  vm.closeSensorDeleteModal = function() {
+    console.log("close")
+    vm.sensorDeleteModal.hide();
+  };
+
+// Open the sensor delete modal
+  vm.openSensorDeleteModal = function(sensorId){
+    getCachedSensorId(sensorId);
+    console.log("open delete modal", sensorId);
+    vm.sensorDeleteModal.show();
+  };
+
+  // Triggered in the device add modal to close it
+  vm.closeSensorAddModal = function() {
+    console.log("close")
+    vm.sensorData = {}; // reset form
+    vm.sensorAddModal.hide();
   };
 
 
-    vm.openSensorModal = function(title){
-      $scope.sensorCreated = false;
-      $scope.deviceId = "";
-      getCachedDevices();
-      console.log("cashed",$scope.deviceData);
-      $scope.sensorTitle = title || "Add New Sensor";
-      console.log("open Sensor")
-        // ngDialog.open({
-        //    template: 'app/sensors/sensors.modal.html',
-        //    className: 'ngdialog-theme-default',
-        //    showClose: false,
-        //    scope: $scope,
-        //    closeByNavigation: true,
-        //    closeByEscape: false
-        // })
-    }
+// Open the sensor add modal
+  vm.openSensorAddModal = function(){
+    console.log("open modal");
+    vm.error = false; //no error
+    vm.sensorCreated = false;
+    vm.deviceId = "";
+    vm.sensorTitle = "Add Sensor";
+    getCachedDevices();
+    vm.activated = authFactory.getCurrentUser().activated;
+    vm.sensorForm.$setPristine();
+    vm.sensorAddModal.show();
+  };
+
 
     vm.openSensorEditModal = function(sensorId){
       getCachedSensorId(sensorId);
@@ -75,44 +116,31 @@ angular
           // })
     }
 
-vm.openSensorDeleteModal = function(sensorId){
-      console.log("open sensor",sensorId)
-      getCachedSensorId(sensorId);
-        // ngDialog.open({
-        //    template: 'app/sensors/sensor.delete.modal.html',
-        //    className: 'ngdialog-theme-default',
-        //    showClose: false,
-        //    scope:$scope,
-        //    closeByNavigation: true,
-        //    closeByEscape: false
-        // })
-    }
 
-    $scope.addSensor = function(sensorData,deviceId){
-      console.log("sensor", deviceId, sensorData);
-
+    vm.addSensor = function(sensorData,deviceId){
+      console.log("add sensor", deviceId, sensorData);
       sensorFactory.addSensorToDevice(sensorData,deviceId)
         .then(function(response){
-          $scope.sensorTitle ="Your MQTT Sensor topic";
-          $scope.sensorCreated = true;
-          $scope.sensorIdData = '';
+          vm.sensorTitle ="Your MQTT Sensor topic";
+          vm.sensorCreated = true;
+          vm.sensorIdData = '';
           var user = authFactory.getCurrentUser();
           sensorFactory.notify();
           deviceFactory.notify();
           console.log("getuser",user)
           vm.sensorName = response.data.data.sensorName;
-          $scope.sensorTopic = "mysensor/" + user.username +'/' + response.data.data._id
-          console.log($scope.sensorTopic);
-          $scope.error = false;
-          console.log(response.data.data);
+          vm.sensorTopic = "mysensor/" + user.username +'/' + response.data.data._id
+          console.log("sensor topic", vm.sensorTopic);
+          vm.error = false;
+          console.log("response", response.data.data);
         })
         .catch(function(err){
-          $scope.error = true;
+          vm.error = true;
           if(err.status == 500){
-            $scope.errorMessage = "Sensor Name not unique!";
-            console.log($scope.errorMessage, $scope.error);
+            vm.errorMessage = "Sensor Name not unique!";
+            console.log(vm.errorMessage, vm.error);
           } else {
-            $scope.errorMessage = err.data.message;
+            vm.errorMessage = err.data.message;
           }
 
         })
@@ -141,12 +169,11 @@ vm.openSensorDeleteModal = function(sensorId){
         })
     }
 
-    $scope.deleteSensor = function(deviceId,sensorId){
-      ngDialog.close();
+    vm.deleteSensor = function(deviceId,sensorId){
       console.log( "delete",deviceId,sensorId);
       sensorFactory.deleteSensor(deviceId,sensorId)
         .then(function(response){
-          ngDialog.close();
+          vm.closeSensorDeleteModal();
           vm.error = false;
           sensorFactory.notify();
           deviceFactory.notify();
@@ -162,24 +189,6 @@ vm.openSensorDeleteModal = function(sensorId){
           vm.error = true;
         })
     }
-
-
-    vm.closeThisDialog = function(){
-      ngDialog.close();
-        $location.path('/dashboard');
-    }
-
-    vm.goToActivate = function(){
-      ngDialog.close();
-      $location.path('/activate');
-    }
-
-    $scope.goToDashboard = function(){
-      ngDialog.close();
-      $location.path('/dashboard');
-    }
-
-
 
   }
 

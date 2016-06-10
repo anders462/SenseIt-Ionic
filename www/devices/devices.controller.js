@@ -22,64 +22,100 @@ angular
   vm.error = false;
   vm.activated = authFactory.getCurrentUser().activated;
   $scope.deviceIdData = {};
-
+  vm.deviceForm ={};
+  vm.deviceData = {};
+  vm.currentUser = authFactory.getCurrentUser().username;
 
     var getCachedDeviceId = function(deviceId){
       vm.deviceData = deviceFactory.getCachedDevices();
       vm.deviceData.forEach(function(device){
         if(device._id == deviceId){
-          $scope.deviceIdData = device;
+          vm.deviceIdData = device;
         }
       });
     }
 
-    vm.openDeviceModal = function(title){
-      $scope.deviceTitle = title || "Add New Device";
-      // console.log("open Device")
-      //   ngDialog.open({
-      //      template: 'app/devices/devices.modal.html',
-      //      className: 'ngdialog-theme-default',
-      //      controller: 'DeviceController',
-      //      controllerAs: 'vm',
-      //      showClose: false,
-      //      scope: $scope,
-      //      closeByNavigation: true,
-      //      closeByEscape: false
-      //   })
-    }
+    // Create the add device modal that we will use later
+    $ionicModal.fromTemplateUrl('devices/devices.add.html', {
+      scope: $scope
+    }).then(function(modal) {
+      console.log("create device Modal");
+      vm.deviceAddModal = modal;
+    }).catch(function(err){
+      console.log(err);
+    });
 
+    // Create the device delete modal that we will use later
+    $ionicModal.fromTemplateUrl('devices/devices.delete.html', {
+      scope: $scope
+    }).then(function(modal) {
+      console.log("create delete Modal");
+      vm.deviceDeleteModal = modal;
+    }).catch(function(err){
+      console.log(err);
+    });
+
+    // Create the device edit modal that we will use later
+    $ionicModal.fromTemplateUrl('devices/devices.edit.html', {
+      scope: $scope
+    }).then(function(modal) {
+      console.log("create edit Modal");
+      vm.deviceEditModal = modal;
+    }).catch(function(err){
+      console.log(err);
+    });
+
+    // Triggered in the device edit modal to close it
+    vm.closeDeviceEditModal = function() {
+      console.log("close edit modal")
+      vm.deviceEditModal.hide();
+    };
+
+    // Open the device edit modal
     vm.openDeviceEditModal = function(deviceId){
-    getCachedDeviceId(deviceId);
-    console.log($scope.deviceIdData)
-        // ngDialog.open({
-        //    template: 'app/devices/devices.edit.modal.html',
-        //    className: 'ngdialog-theme-default',
-        //    showClose: false,
-        //    scope:$scope,
-        //    closeByNavigation: true,
-        //    closeByEscape: false
-        // })
-    }
-
-    vm.openDeviceDeleteModal = function(deviceId){
-      console.log("open device",deviceId)
       getCachedDeviceId(deviceId);
-        // ngDialog.open({
-        //    template: 'app/devices/devices.delete.modal.html',
-        //    className: 'ngdialog-theme-default',
-        //    showClose: false,
-        //    scope:$scope,
-        //    closeByNavigation: true,
-        //    closeByEscape: false
-        // })
-    }
+      console.log(vm.deviceIdData);
+      console.log("open editmodal", deviceId);
+      vm.deviceEditModal.show();
+    };
+
+    // Triggered in the device delete modal to close it
+    vm.closeDeviceDeleteModal = function() {
+      console.log("close")
+      vm.deviceDeleteModal.hide();
+    };
+
+  // Open the device delete modal
+    vm.openDeviceDeleteModal = function(deviceId){
+      getCachedDeviceId(deviceId);
+      console.log(vm.deviceIdData);
+      console.log("open delete modal", deviceId);
+      vm.deviceDeleteModal.show();
+    };
+
+    // Triggered in the device add modal to close it
+    vm.closeDeviceAddModal = function() {
+      console.log("close")
+      vm.deviceData = {}; // reset form
+      vm.deviceAddModal.hide();
+    };
+
+  // Open the device add modal
+    vm.openDeviceAddModal = function(){
+      console.log("open add modal");
+      vm.error = false; //no error
+      vm.deviceForm.$setPristine();
+      vm.deviceAddModal.show();
+    };
+
+
 
     vm.addDevice = function(){
       console.log("device",vm.deviceData)
       deviceFactory.addDevice(vm.deviceData)
         .then(function(response){
           vm.deviceData = '';
-          ngDialog.close();
+          vm.closeDeviceAddModal();
           vm.error = false;
           deviceFactory.notify();
           console.log(response.data);
@@ -95,12 +131,13 @@ angular
         })
     }
 
-    $scope.editDevice = function(){
-      ngDialog.close();
-      deviceFactory.updateDevice($scope.deviceIdData._id,$scope.deviceIdData)
+     vm.editDevice = function(deviceData){
+       console.log("editDevice",deviceData);
+       delete deviceData.sensors;
+      deviceFactory.updateDevice(deviceData._id,deviceData)
         .then(function(response){
-          vm.deviceData = '';
-          ngDialog.close();
+          vm.deviceIdData = '';
+          vm.closeDeviceEditModal();
           vm.error = false;
           deviceFactory.notify();
           console.log("after device edit",response.data);
@@ -116,12 +153,11 @@ angular
         })
     }
 
-    $scope.deleteDevice = function(){
-      ngDialog.close();
-      console.log( "delete",$scope.deviceIdData._id);
-      deviceFactory.deleteDevice($scope.deviceIdData._id)
+    vm.deleteDevice = function(deviceId){
+      console.log( "delete",deviceId);
+      deviceFactory.deleteDevice(deviceId)
         .then(function(response){
-          ngDialog.close();
+          vm.closeDeviceDeleteModal();
           vm.error = false;
           deviceFactory.notify();
           console.log("after device delete",response.data);
@@ -136,16 +172,6 @@ angular
           vm.error = true;
         })
     }
-
-
-
-    vm.closeThisDialog = function(){
-      // ngDialog.close();
-      $location.path('/dashboard');
-    }
-
-
-
 
   }
 

@@ -1,0 +1,144 @@
+
+
+<div class="mymodal">
+  <ion-modal-view class="device-modal-edit">
+  <ion-header-bar>
+    <h1 class="title">Edit Device</h1>
+    <div class="buttons">
+      <button class="button button-outline button-stable" ng-click="vm.closeDeviceEditModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content >
+      <form ng-submit="vm.editDevice(vm.deviceIdData)" name="vm.deviceForm" novalidate >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Device Name</span>
+          <input type="text" class="" name="deviceName" id="deviceName" placeholder="Device Name" ng-model="vm.deviceIdData.deviceName" ng-required="true">
+        </label>
+         <label class="item item-input">
+            <span class="input-label">Address</span>
+         </label>
+          <label class="item item-input">
+            <input type="text" class="form-control input-sm" name="country" id="country" placeholder="Country" ng-model="vm.deviceIdData.address.country" ng-required="false">
+          </label>
+          <label class="item item-input">
+            <input type="text" class="form-control input-sm" name="city" id="city" placeholder="City" ng-model="vm.deviceIdData.address.city" ng-required="false">
+          </label>
+          <label class="item item-input">
+            <input type="text" class="form-control input-sm" name="zipCode" id="zipCode" placeholder="Zip Code" ng-model="vm.deviceIdData.address.zipCode" ng-required="false">
+          </label>
+            <label class="item item-input">
+            <input type="text" class="form-control input-sm" name="streetName" id="streetName" placeholder="Street Name" ng-model="vm.deviceIdData.address.streetName" ng-required="false">
+          </label>
+            <label class="item item-input">
+            <input type="text" class="form-control input-sm" name="houseNumber" id="houseNumber" placeholder="Street Number" ng-model="vm.deviceIdData.address.houseNumber" ng-required="false">
+          </label>
+        <label class="item item-input">
+          <span class="input-label">Device Info</span>
+        </label>
+        <label class="item item-input">
+         <input type="text" class="form-control input-sm" name="deviceManufacturer" id="deviceManufacturer" placeholder="Manufacturer" ng-model="vm.deviceIdData.deviceInfo.manufacturer" ng-required="false">
+       </label>
+        <label class="item item-input">
+         <input type="text" class="form-control input-sm" name="model" id="model" placeholder="Model" ng-model="vm.deviceIdData.deviceInfo.model" ng-required="false">
+       </label>
+       <label class="item item-input">
+         <span class="input-label">Device Image</span>
+         <input type="text" class="form-control input-sm" name="deviceImage" id="deviceImage" placeholder="deviceImage" ng-model="vm.deviceIdData.deviceImage" ng-required="false">
+      </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Device Type</span>
+          <!--MAKE DEVICE LIST BE AN OBJECT READ FROM DATABASE FOR SCALABILITY AND ADMIN IN FUTURE -->
+          <select class="" name="deviceType" ng-required="true" ng-model="vm.deviceIdData.deviceType">
+              <option value="">Device type and model</option>
+              <option value="Raspberry PI, Pi 3 Model B">Raspberry PI, Pi 3 Model B</option>
+              <option value="Raspberry PI, Pi 2 Model B">Raspberry PI, Pi 2 Model B</option>
+              <option value="Raspberry PI, Pi 1 Model B+">Raspberry PI, Pi 1 Model B+</option>
+              <option value="Raspberry PI, Pi 1 Model A+">Raspberry PI, Pi 1 Model A+</option>
+              <option value="Raspberry PI, Pi Zero">Raspberry PI, Pi Zero</option>
+          </select>
+        </label>
+
+        <label class="item item-list">
+          <span class="input-label">Connected Sensors (edit via sensor)</span>
+          <div class="" ng-repeat="sensor in vm.deviceIdData.sensors">
+            <p>{{sensor.sensorName}}</p><br>
+          </div><br>
+        </label>
+      </div>
+        <div class="padding alert">
+            <p ng-show="vm.error" >* {{vm.errorMessage}}</p>
+            <p ng-show="vm.deviceForm.deviceName.$error.required && vm.deviceForm.deviceName.$dirty">* Username is required!</p>
+            <p ng-show="vm.deviceForm.deviceType.$error.required && vm.deviceForm.deviceType.$dirty">* Device Type is required!</p>
+        </div>
+        <label class="">
+          <button type="submit" class="button button-block button-positive" ng-disabled="vm.deviceForm.$invalid">Save Device</button>
+        </label>
+        <button class="button button-block button-balanced" ng-click="vm.closeDeviceEditModal()">Cancel</button>
+
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
+</div>
+
+
+
+
+
+
+
+    <!-- <div class="ngdialog-message">
+        <div class="">
+            <h3>Edit Device</h3>
+        </div>
+        <div class="">&nbsp;</div>
+        <div class="">
+          <div ng-show="vm.error" class="alert alert-danger">{{vm.errorMessage}}</div>
+            <form class="device-sensor-form" ng-submit="editDevice()" name="deviceForm" novalidate >
+                <div class="form-group" ng-class="{'has-error': deviceForm.deviceName.$invalid && deviceForm.deviceName.$touched}">
+                    <label class="" for="deviceName">Device Name</label>
+                    <input type="text" class="form-control input-sm" name="deviceName" id="deviceName" placeholder="Device Name" ng-model="deviceIdData.deviceName" ng-required="true">
+                    <span class="help-block" ng-if="deviceForm.deviceName.$error.required && deviceForm.deviceName.$touched">Device Name is required!</span>
+                </div>
+                <div class="form-group">
+                    <label class="" for="address">Address</label>
+                    <input type="text" class="form-control input-sm" name="country" id="country" placeholder="Country" ng-model="deviceIdData.address.country" ng-required="false">
+                    <input type="text" class="form-control input-sm" name="city" id="city" placeholder="City" ng-model="deviceIdData.address.city" ng-required="false">
+                    <input type="text" class="form-control input-sm" name="zipCode" id="zipCode" placeholder="Zip Code" ng-model="deviceIdData.address.zipCode" ng-required="false">
+                    <input type="text" class="form-control input-sm" name="streetName" id="streetName" placeholder="Street Name" ng-model="deviceIdData.address.streetName" ng-required="false">
+                    <input type="text" class="form-control input-sm" name="houseNumber" id="houseNumber" placeholder="Street Number" ng-model="deviceIdData.address.houseNumber" ng-required="false">
+                </div>
+                <div class="form-group">
+                    <label class="" for="address">Device Info</label>
+                    <input type="text" class="form-control input-sm" name="deviceManufacturer" id="deviceManufacturer" placeholder="Manufacturer" ng-model="deviceIdData.deviceInfo.manufacturer" ng-required="false">
+                    <input type="text" class="form-control input-sm" name="model" id="model" placeholder="Model" ng-model="deviceIdData.deviceInfo.model" ng-required="false">
+                </div>
+                <div class="form-group">
+                    <label class="" for="deviceImage">Device Image</label>
+                    <input type="text" class="form-control input-sm" name="deviceImage" id="deviceImage" placeholder="deviceImage" ng-model="deviceIdData.deviceImage" ng-required="false">
+                </div>
+                <div class="form-group" ng-class="{'has-error': deviceForm.deviceType.$invalid && deviceForm.deviceType.$touched}">
+                  <label class="" for="address">Device Type</label>
+                  <select class="form-control input-sm" name="deviceType" ng-required="true" ng-model="deviceIdData.deviceType">
+                      <option value="">Device Type and Model</option>
+                      <option value="Raspberry PI, Pi 3 Model B">Raspberry PI, Pi 3 Model B</option>
+                      <option value="Raspberry PI, Pi 2 Model B">Raspberry PI, Pi 2 Model B</option>
+                      <option value="Raspberry PI, Pi 1 Model B+">Raspberry PI, Pi 1 Model B+</option>
+                      <option value="Raspberry PI, Pi 1 Model A+">Raspberry PI, Pi 1 Model A+</option>
+                      <option value="Raspberry PI, Pi Zero">Raspberry PI, Pi Zero</option>
+                  </select>
+                  <span class="help-block" ng-if="deviceForm.deviceType.$error.required && deviceForm.deviceType.$touched">Device Type is required!</span>
+                </div>
+                <label class="">Connected Sensors (edit via sensor)</label>
+                <div class="" ng-repeat="sensor in deviceIdData.sensors">
+                    <p>{{sensor.sensorName}}</p>
+                </div><br>
+                <button type="submit" class="btn btn-info btn-sm" ng-disabled="deviceForm.$invalid">Save Device</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click=closeThisDialog()>Cancel</button> &nbsp; &nbsp;
+            </form>
+        </div>
+        <div>
+
+        </div>
+    </div> -->

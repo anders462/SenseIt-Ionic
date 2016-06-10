@@ -1,0 +1,17 @@
+
+      <div class="mymodal">
+          <ion-modal-view class="sensor-modal-delete">
+          <ion-header-bar>
+            <h1 class="title">Delete Sensor&nbsp{{vm.sensorIdData.sensorName}}</h1>
+            <div class="buttons">
+              <button class="button button-outline button-stable" ng-click="vm.closeSensorDeleteModal()">Close</button>
+            </div>
+          </ion-header-bar>
+          <ion-content >
+              <div class="list">
+                  <button type="button" class="button button-block button-balanced" ng-click="vm.deleteSensor(vm.sensorIdData.belongTo,vm.sensorIdData._id)">Confirm Delete</button>
+                  <button type="button" class="button button-block button-assertive" ng-click=vm.closeSensorDeleteModal()>Cancel</button> &nbsp; &nbsp;
+              </div>
+          </ion-content>
+        </ion-modal-view>
+      </div>

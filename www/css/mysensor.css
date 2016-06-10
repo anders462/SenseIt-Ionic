@@ -1,3 +1,6 @@
+#chart-container {
+  width: 90%; }
+
 .mymodal .modal {
   min-height: 0 !important;
   border-radius: 3% !important;
@@ -16,6 +19,67 @@
 .button {
   font-weight: bold; }
 
+.device-modal-add {
+  width: 90%;
+  height: 60%;
+  top: 15%;
+  bottom: 25%;
+  right: 5%;
+  left: 5%; }
+  .device-modal-add select {
+    background: #444;
+    color: #ffffff; }
+
+.device-modal-edit {
+  width: 90%;
+  height: 80%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+  .device-modal-edit select {
+    background: #444;
+    color: #ffffff; }
+  .device-modal-edit p {
+    color: #ffffff; }
+
+.sensor-modal-add {
+  width: 90%;
+  height: 60%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+  .sensor-modal-add select {
+    background: #444;
+    color: #ffffff; }
+  .sensor-modal-add .card .item {
+    background: #5e5e5e;
+    color: white; }
+    .sensor-modal-add .card .item .notification {
+      margin-top: 10px;
+      background-color: #777777;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 10px;
+      border: 1px, solid, #919191; }
+
+.sensor-modal-delete {
+  width: 90%;
+  height: 35%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+
+.device-modal-delete {
+  width: 90%;
+  height: 35%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+
 .login-modal {
   width: 90%;
   height: 50%;
@@ -24,9 +88,33 @@
   right: 5%;
   left: 5%; }
 
+.activate-modal {
+  width: 90%;
+  height: 75%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+  .activate-modal p {
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    margin-left: 5%; }
+  .activate-modal .card .item {
+    background: #5e5e5e;
+    color: white; }
+
+.spinner svg {
+  width: 35px;
+  height: 35px; }
+
+.ion-close-circled {
+  color: red;
+  font-size: 35px; }
+
 .register-modal {
   width: 90%;
-  height: 80%;
+  height: 70%;
   top: 10%;
   bottom: 20%;
   right: 5%;
@@ -34,7 +122,7 @@
 
 .logout-modal {
   width: 70%;
-  height: 2%;
+  height: 25%;
   top: 30%;
   bottom: 30%;
   right: 15%;
@@ -67,14 +155,6 @@ input {
   margin-top: 5px;
   margin-bottom: 5px; }
 
-.sensorName {
-  font-size: 1.3em;
-  color: #e24f07; }
-
-.sensorData {
-  font-size: 2em;
-  color: gray; }
-
 .dashboard {
   font-size: 1.5em;
   margin-bottom: 2%;
@@ -86,8 +166,8 @@ input {
 .box {
   color: white;
   padding: 10px;
-  margin-bottom: 1%;
-  height: 10%; }
+  margin-bottom: 3%;
+  height: 80px; }
 
 .box.devices {
   background-color: #F44336;
@@ -110,12 +190,14 @@ input {
   border-color: gray; }
 
 .box-livedata {
-  padding: 20px;
-  border: gray 2px solid;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px; }
+  border: gray 1px solid;
+  margin: 5% 5% 15% 5%; }
+  .box-livedata .sensorName {
+    font-size: 1.2em;
+    color: #e24f07; }
+  .box-livedata .sensorData {
+    font-size: 1.5em;
+    color: gray; }
 
 .title {
   font-size: 1em;
@@ -125,32 +207,6 @@ input {
 .circle {
   font-size: 1.5em;
   font-family: arial; }
-
-.form-group .help-block {
-  display: none; }
-
-.fa.fa-database {
-  font-size: 2em;
-  color: white; }
-
-.fa.fa-bell {
-  font-size: 2em;
-  color: white; }
-
-.fa.fa-circle.activated {
-  font-size: 3em;
-  color: green; }
-
-.fa.fa-circle.not-activated {
-  font-size: 3em;
-  color: red; }
-
-.fa.fa-times {
-  font-size: 1.5em;
-  color: white;
-  position: absolute;
-  top: 20px;
-  right: 35px; }
 
 .on {
   font-size: 0.8em;
@@ -176,29 +232,21 @@ input {
   right: 35px;
   box-shadow: none; }
 
-.fa.fa-plus {
-  font-size: 1.5em;
-  color: white;
-  right: 35px; }
-
 .plus-list {
   font-family: arial;
-  font-size: 1.6em;
+  font-size: 1.7em;
   color: white;
-  position: absolute;
-  bottom: 20px;
-  left: 35px; }
+  position: relative;
+  bottom: 50%;
+  left: 58%; }
 
 small {
   font-family: arial;
-  font-size: 0.6em; }
-
-.form-group.has-error .help-block {
-  display: block; }
+  font-size: 0.65em; }
 
 .main {
   height: 350px;
-  background-image: url("../images/Motherboard_450.jpg");
+  background-image: url("../img/Motherboard_450.jpg");
   background-size: cover; }
   .main a {
     margin: 20px; }
@@ -235,18 +283,5 @@ h4 {
   .example-box .ion-android-phone-portrait {
     font-size: 4em;
     color: white; }
-
-.beacon {
-  position: relative;
-  top: 20px;
-  left: 50%;
-  background-color: #40be26;
-  height: 2em;
-  width: 2em;
-  border-radius: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%); }
-
-.beacon.deactive {
-  background-color: #f40444; }
 
 /*# sourceMappingURL=mysensor.css.map */

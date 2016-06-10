@@ -17,6 +17,7 @@ angular
 function mqttFactory ($http, $window, $rootScope, authFactory){
 
 var mqttData = {};
+var connected = false;
 
  var createMqttClient = function() {
    console.log("createMqttClient");
@@ -25,6 +26,7 @@ var mqttData = {};
    authFactory.getMe()
     .then(function(resp){
       //call connection function
+      console.log("me",resp.data)
       connect(resp.data);
     })
     .catch(function(err){
@@ -33,8 +35,8 @@ var mqttData = {};
 
 var connect = function(creds){
 
-  // Create a client instance
- var client = new Paho.MQTT.Client("m12.cloudmqtt.com", 32337,"web_" + parseInt(Math.random() * 100, 10));
+  // Create a client instance// 32337 port for testing
+ var client = new Paho.MQTT.Client("m12.cloudmqtt.com", 35588,"web_" + parseInt(Math.random() * 100, 10));
   // set callback handlers
   client.onConnectionLost = onConnectionLost;
   client.onMessageArrived = onMessageArrived;
@@ -56,22 +58,11 @@ var connect = function(creds){
 
   // called when the client connects
   function onConnect() {
-  // Once a connection has been made, make a subscription.
-
+    //notify account is connected
+    notifyConnect();
     console.log("onConnect");
     //subscribe to my allowed topics
     client.subscribe(topic_all_mine);
-
-  // $('#submit').click(function(key) {
-  //          var text = $('#message').val();
-  //          $('#message').val("");
-  //          console.log("message",text);
-  //          var message = new Paho.MQTT.Message(text);
-  //          message.destinationName = topic_1;
-  //          client.send(message);
-  //
-  // });
-
   }
 
   //NEED TO TRY TO RECONNECT
@@ -102,11 +93,30 @@ function getCachedMqttData(){
   return mqttData;
 }
 
+function setConnected(status){
+  connected = status;
+}
+
+function getConnected(){
+  return connected;
+}
+
 
 //Creates a handler to listen to connectionLost
 var subscribe = function(scope, callback) {
         var handler = $rootScope.$on('connectionLost', callback);
         scope.$on('$destroy', handler);
+    }
+
+//Creates a handler to listen to connection
+var subscribeConnect = function(scope, callback) {
+    var handler = $rootScope.$on('connection', callback);
+    scope.$on('$destroy', handler);
+}
+
+//notify change connection
+var notifyConnect = function() {
+        $rootScope.$emit('connection');
     }
 
 //notify change connectionLost
@@ -130,7 +140,10 @@ var notify = function() {
         createMqttClient: createMqttClient, //creates new client
         subscribe: subscribe, //subscribe handler for rootScope changes
         subscribeMqtt: subscribeMqtt,
-        getCachedMqttData: getCachedMqttData
+        subscribeConnect: subscribeConnect,
+        getCachedMqttData: getCachedMqttData,
+        getConnected: getConnected,
+        setConnected: setConnected
       };
 
 

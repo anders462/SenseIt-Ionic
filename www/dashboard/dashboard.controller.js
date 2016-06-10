@@ -17,18 +17,21 @@ angular
     'authFactory',
     'activateFactory',
     'mqttFactory',
-    'chartFactory'
+    'chartFactory',
+    '$ionicScrollDelegate',
+    '$location'
   ];
 
-function DashboardController($state,deviceFactory,sensorFactory,$scope,$ionicModal,$rootScope,authFactory,activateFactory,mqttFactory,chartFactory){
+function DashboardController($state,deviceFactory,sensorFactory,$scope,$ionicModal,$rootScope,authFactory,activateFactory,mqttFactory,chartFactory,$ionicScrollDelegate,$location){
 
   var vm = this; //set vm (view model) to reference main object
   vm.deviceData = [];
   vm.sensorData = [];
   vm.messages = [];
   vm.mqttData = {};
-  var topic = "";
   vm.liveData =[];
+  var topic = "";
+  var MAX_SAMPLE_TIME = 30*60*1000; //throttle to 30 min max sample time, due to Mobile limitations
   var defaultChart = null;
   var defaultSampleType;
   var sampleSeries = [{ name:'sample-name', data:[[5757579399,2],[5757579400,3],[5757579401,4],[5757579402,3],[5757579403,5],[5757579404,4]] }];
@@ -37,9 +40,18 @@ function DashboardController($state,deviceFactory,sensorFactory,$scope,$ionicMod
   vm.activated = authFactory.getCurrentUser().activated;
   vm.currentUser = authFactory.getCurrentUser().username;
 
+
+vm.goToAnchor = function(anchor){
+  $location.hash(anchor);
+  $ionicScrollDelegate.anchorScroll(true);
+}
+
 vm.updateChart = function(sensorId,sampleType) {
-  console.log("updateChart",sensorId,sampleType)
+  var series = [];
+  var data = [];
+  var point;
   var chartTitle;
+  console.log("updateChart",sensorId,sampleType)
   var yAxisData = sampleType + " sample value";
   var sensor = vm.sensorData.filter(function(sensor){
     if (sensor._id == sensorId){
@@ -47,23 +59,24 @@ vm.updateChart = function(sensorId,sampleType) {
       return sensor;
     }
   })
- var series = [];
- var data = [];
- var point;
+ var oldSampleTime = sensor[0].data[0].time;
  sensor[0].data.forEach(function(obj,index){
-  point = [obj.time,obj.data[sampleType]];
-  data.push(point);
+   if (obj.time >= (oldSampleTime + MAX_SAMPLE_TIME) ) {
+     point = [obj.time,obj.data[sampleType]];
+     data.push(point);
+     oldSampleTime = obj.time;
+   }
  })
+ console.log("sample size",data.length);
  var sample = {name:sampleType,data:data};
  series.push(sample);
- console.log("series",series);
  chartFactory.chartValues(series,chartTitle, yAxisData);
 };
 
 
   var countMessages = function(sensorData){
     vm.messages = sensorData.reduce(function(aggr,curr,index,arr){
-      console.log(curr.sensorName, curr.data.length, defaultChart );
+      // console.log(curr.sensorName, curr.data.length, defaultChart );
       if (defaultChart == null && curr.data.length > 0 ){
         defaultChart = curr._id;
         defaultSampleType = Object.keys(curr.data[0].data)[0];
@@ -71,11 +84,9 @@ vm.updateChart = function(sensorId,sampleType) {
         vm.updateChart(defaultChart, defaultSampleType)
       }
       aggr += curr.data.length;
-      console.log(aggr)
       return aggr;
     },0);
     if (vm.messages == 0){
-      console.log(sampleSeries)
       chartFactory.chartValues(sampleSeries,"Sample", "Sample");
     }
   }
@@ -84,14 +95,11 @@ vm.updateChart = function(sensorId,sampleType) {
     var payload = getPayload(data.payloadString);
     var id = getId(data.destinationName);
     var mappedSensorData = getMatch(id,payload);
-    console.log("mappedSensorData", mappedSensorData)
     vm.liveData = mappedSensorData.filter(function(sensor){
-      console.log(sensor);
       if (sensor.hasOwnProperty('payload')){
         return sensor;
       }
     });
-    console.log("sensors", vm.liveData);
     $scope.$apply();
   }
 
@@ -151,6 +159,7 @@ vm.updateChart = function(sensorId,sampleType) {
   $scope.$on('$stateChangeSuccess',function(){
     ///ADD LOADING.... Message
     //CAN I DO THIS FROM CACHE INSTEAD??
+    console.log("updateDeviceModel and updateSensorModel")
       updateDeviceModel();
       updateSensorModel();
 
@@ -166,18 +175,22 @@ vm.updateChart = function(sensorId,sampleType) {
      sensorFactory.subscribe($scope, function sensorUpdated() {
        console.log("sensors updated emit received");
        updateSensorModel();
-       console.log(sensorFactory.getCachedSensors());
+      //  console.log(sensorFactory.getCachedSensors());
       });
 
+      //listen for change in activation status
       activateFactory.subscribe($scope, function activationUpdated() {
         console.log("activation updated emit received");
         vm.activated = authFactory.getCurrentUser().activated;
        });
 
+       //listen for new mqtt message
        mqttFactory.subscribeMqtt($scope, function messageUpdated(event,data) {
-         console.log("new mqtt message received", data.payloadString, data.destinationName);
+        console.log("new mqtt message received", data.payloadString, data.destinationName);
+         //check valid payload object
          if(typeof JSON.parse(data.payloadString) =='object'){
-           updateMqttData(data)
+           updateMqttData(data);
+           vm.messages++;
          }
        });
 

@@ -1,0 +1,42 @@
+<div class="mymodal">
+  <ion-modal-view class="device-modal-add">
+  <ion-header-bar>
+    <h1 class="title">Add Device</h1>
+    <div class="buttons">
+      <button class="button button-outline button-stable" ng-click="vm.closeDeviceAddModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content >
+      <form ng-submit="vm.addDevice()" name="vm.deviceForm" novalidate >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Device Name</span>
+          <input type="text" class="" name="deviceName" id="deviceName" placeholder="Device Name" ng-model="vm.deviceData.deviceName" ng-required="true">
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Device Type</span>
+          <!--MAKE DEVICE LIST BE AN OBJECT READ FROM DATABASE FOR SCALABILITY AND ADMIN IN FUTURE -->
+          <select class="" name="deviceType" ng-required="true" ng-model="vm.deviceData.deviceType">
+              <option value="">Device type and model</option>
+              <option value="Raspberry PI, Pi 3 Model B">Raspberry PI, Pi 3 Model B</option>
+              <option value="Raspberry PI, Pi 2 Model B">Raspberry PI, Pi 2 Model B</option>
+              <option value="Raspberry PI, Pi 1 Model B+">Raspberry PI, Pi 1 Model B+</option>
+              <option value="Raspberry PI, Pi 1 Model A+">Raspberry PI, Pi 1 Model A+</option>
+              <option value="Raspberry PI, Pi Zero">Raspberry PI, Pi Zero</option>
+          </select>
+        </label>
+      </div>
+        <div class="padding alert">
+            <p ng-show="vm.error" >* {{vm.errorMessage}}</p>
+            <p ng-show="vm.deviceForm.deviceName.$error.required && vm.deviceForm.deviceName.$dirty">* Username is required!</p>
+            <p ng-show="vm.deviceForm.deviceType.$error.required && vm.deviceForm.deviceType.$dirty">* Device Type is required!</p>
+        </div>
+        <label class="">
+          <button type="submit" class="button button-block button-positive" ng-disabled="vm.deviceForm.$invalid">Add Device</button>
+          <button class="button button-block button-balanced" ng-click="vm.closeDeviceAddModal()">Back To Dashboard</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
+</div>

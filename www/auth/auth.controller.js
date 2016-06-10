@@ -34,7 +34,6 @@ angular
   });
 
 
-
   // Create the register modal that we will use later
   $ionicModal.fromTemplateUrl('auth/register.html', {
     scope: $scope
@@ -42,7 +41,7 @@ angular
     vm.regModal = modal;
   });
 
-  // Create the register modal that we will use later
+  // Create the logout modal that we will use later
   $ionicModal.fromTemplateUrl('auth/logout.html', {
     scope: $scope
   }).then(function(modal) {
@@ -60,8 +59,6 @@ angular
     vm.closeRegister();
     vm.error = false; //no error
     vm.loginForm.$setPristine();
-    console.log(vm.loginForm);
-
     vm.loginModal.show();
   };
 
@@ -95,7 +92,7 @@ angular
 
   // Perform the login action when the user submits the login form
     vm.doLogin = function(){
-      console.log("loginData", vm.loginData);
+      console.log("loginData", vm.loginData.username, vm.loginData.password);
       authFactory.login(vm.loginData)
         .then(function(response){
           vm.loginData = {}; // reset form
@@ -109,7 +106,7 @@ angular
           $state.go('app.dashboard');//go to dashboard
         })
         .catch(function(err){
-          console.log(err.data.err.message);
+          console.log("ERROR",err.data.err.message);
           vm.error = true; //show error message
           vm.errorMessage = err.data.err.message; //log error message
         })

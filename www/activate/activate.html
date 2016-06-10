@@ -1,0 +1,51 @@
+<div class="mymodal" >
+  <ion-modal-view class="activate-modal">
+  <ion-header-bar>
+    <h1 class="title">{{vm.activateTitle}}</h1>
+    <div class="buttons">
+      <button class="button button-outline button-stable" ng-click="vm.closeActivate()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content >
+    <p ng-class ng-show="!vm.activated">Your account is not Active</p>
+    <p ng-show="vm.activated">Your account is Active</p>
+    <div class="card" ng-show="!vm.activated">
+      <div class="item item-text-wrap">
+        To be able to send messages from your devices and sensors, you need to perform a <strong>one</strong> time activation of your MQTT broker account. You will use this credentials when you authenticate your devices.
+      </div>
+    </div>
+    <div class="card" ng-show="vm.activated">
+     <div class="item item-text-wrap">
+       Your MQTT credentials to connect, please take note of this, as Password only be shown at activation.<em> If you don't remember your password you need to deactive and reactive your account</em>:</br></br>
+       <ul>
+         <li>Hostname: mqtt://m12.cloudmqtt.com:12337</li>
+         <li>Username: {{vm.mqttUsername}}</li>
+         <li>Password: {{vm.mqttPassword}}</li>
+       </ul></br>
+       <button type="button" class="button button-block button-assertive" ng-click=vm.deActivate()>Deactivate Account</button>
+       <button class="button button-block button-balanced" ng-click="vm.closeActivate()">Back to Dashboard</button>
+     </div>
+   </div>
+
+    <form ng-submit="vm.doActivate()" ng-show="!vm.activated" name="vm.activateForm" novalidate >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" class="form-control input-sm" name="password" id="password" placeholder="Create MQTT Password" ng-model="vm.activationData.password"
+          ng-required="vm.shouldValidate('password')" ng-minlength="vm.shouldValidate('password_len')">
+
+        </label>
+      </div>
+        <div class="padding alert">
+            <p ng-show="vm.error" >* {{vm.errorMessage}}</p>
+            <p ng-show="vm.activateForm.password.$dirty && vm.activateForm.password.$invalid">* Min 8 character Password is required!</p>
+            <p ng-show="vm.activateForm.password.$error.required && vm.activateForm.password.$dirty">* Password is required!</p>
+        </div>
+        <label class="">
+          <button type="submit" class="button button-block button-positive" ng-disabled="activateForm.$invalid">Activate</button>
+        </label>
+    </form>
+    <!-- <button class="button button-block button-balanced" ng-click="vm.closeActivate()">Back to Dashboard</button> -->
+  </ion-content>
+</ion-modal-view>
+</div>

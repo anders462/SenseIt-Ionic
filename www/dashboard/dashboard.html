@@ -1,54 +1,57 @@
 
-<ion-view view-title="Dashboard">
+<ion-view view-title="Dashboard" id='top'>
   <ion-content>
-    <div class="row" ng-controller="ActivateController as actCtrl">
+    <div class="row">
       <div class="col text-center">
           <h5 class="dashboard">Dashboard </h5>
      </div>
    </div>
-   <div class='row status-panel'>
+   <div class='row status-panel' ng-controller="ActivateController as vm">
       <div class="col text-center">
           <h5 class="">Account Name</h5>
           <p>{{vm.currentUser}}</p>
      </div>
      <div class="col text-center">
-         <h5 class="">MQTT Status</h5>
-         <p ng-show="vm.activated" class="beacon"></p>
-         <p ng-show="!vm.activated" class="beacon deactive"></p>
+         <h5 class="" ng-show="vm.connected&&vm.activated">MQTT Online</h5>
+         <h5 class=""ng-show="!vm.connected&&vm.activated">Connecting...</h5>
+         <h5 class=""ng-show="!vm.activated">MQTT Status</h5>
+         <ion-spinner ng-show="vm.connected&&vm.activated" icon="ripple" class="spinner-balanced"></ion-spinner>
+         <ion-spinner ng-show="!vm.connected&&vm.activated" icon="bubbles" class="spinner-assertive"></ion-spinner>
+         <i ng-show="!vm.activated" class="ion-close-circled"></i>
     </div>
     <div class="col text-center">
-        <h5 ng-show="!vm.activated" class="">Activate</h5>
-        <h5 ng-show="vm.activated" class="">Deactivate</h5>
+        <h5 ng-show="!vm.toggleActivated" class="">Activate</h5>
+        <h5 ng-show="vm.toggleActivated" class="">Deactivate</h5>
         <label class="toggle">
-          <input type="checkbox">
+          <input type="checkbox" ng-model="vm.toggleActivated" ng-change="vm.openActivationModal(vm.toggleActivated)">
           <div class="track">
             <div class="handle"></div>
           </div>
-          <!-- <button class="btn btn-sm btn-success" ng-click="actCtrl.openActivationModal()"> Active/Deactivate</button> -->
-
        </label>
      </div>
     </div>
         <div class="row">
           <div class="col">
-            <div class="box devices" ng-controller="DeviceController as devCtrl" >
+            <div class="box devices" >
               <!-- <i class="fa fa-database" aria-hidden="true"></i> -->
               <p class="title">DEVICES</p>
               <p class="circle">{{vm.deviceData.length}}</p>
-              <div class="plus-list">
-                <!-- <span class="glyphicon glyphicon-plus" ng-click="devCtrl.openDeviceModal()"><small>ADD</small></span> -->
+              <div class="plus-list" >
+                <i ng-controller="DeviceController as vm" class="ion-plus" ng-click="vm.openDeviceAddModal()">&nbsp<small>ADD</small></i>
+                <i class="ion-ios-list-outline" ng-click="vm.goToAnchor('devices-list')">&nbsp<small>LIST</small></i>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col" ng-controller="SensorController as senCtrl">
+          <div class="col">
             <div class="box sensors">
               <!-- <i class="fa fa-database" aria-hidden="true"></i> -->
               <p class="title">SENSORS</p>
               <p class="circle">{{vm.sensorData.length}}</p>
               <div class="plus-list">
-                <!-- <span class="glyphicon glyphicon-plus" ng-click="senCtrl.openSensorModal()"><small>ADD</small></span> -->
+               <i ng-controller="SensorController as vm" class="ion-plus" ng-click="vm.openSensorAddModal()">&nbsp<small>ADD</small></i>
+               <i class="ion-ios-list-outline" ng-click="vm.goToAnchor('sensors-list')">&nbsp<small>LIST</small></i>
               </div>
             </div>
           </div>
@@ -56,9 +59,12 @@
         <div class="row">
           <div class="col">
             <div class="box messages">
-              <!-- <i class="fa fa-database" aria-hidden="true"></i> -->
               <p class="title">MESSAGES</p>
               <p class="circle">{{vm.messages}}</p>
+              <div class="plus-list">
+                <i class="ion-ios-pulse-strong" ng-click="vm.goToAnchor('live-data')">&nbsp<small>LIVE</small></i>
+                <i class="ion-stats-bars" ng-click="vm.goToAnchor('chart')">&nbsp<small>CHART</small></i>
+              </div>
             </div>
           </div>
         </div>
@@ -69,93 +75,81 @@
               <p class="title">ALARMS</p>
               <p class="circle">0</p>
               <div class="plus-list">
-                <!-- <span class="glyphicon glyphicon-plus" ng-click="devCtrl.openDeviceModal()"><small>ADD</small></span> -->
+                <i class="ion-plus" ng-click="vm.goToAnchor('to-be')">&nbsp<small>ADD</small></i>
+                <i class="ion-ios-list-outline" ng-click="vm.goToAnchor('to-be')">&nbsp<small>LIST</small></i>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" id='chart'>
               <div id="chart-container"></div>
             </div>
         </div>
-  </ion-content>  <div class="bar bar-footer bar-dark">
-    <div class="title">SenseIt</div>
-    </div>
-</ion-view>
-
-
-<!--
-
-         <div class="well">
-           Tip!!
-           To send a MQTT message from a sensor use the following format:
-           <ul>
-             <li>Payload: '{"d":{"temp": value,"humidity":value,...}}''</li>
-             <li>Topic: 'mysensor/my_username/sensorId'</li>
-
-           </ul>
-
-         </div>
-       </div>
-      </div>
-         <div class="row"> -->
-           <!-- <div class="col-sm-2 box-livedata" ng-repeat="sensor in vm.liveData">
+        <div class="row" id="live-data">
+           <div class="col box-livedata" ng-repeat="sensor in vm.liveData">
              <p class="sensorName text-center">{{sensor.sensorName}}<br><small>click on sample type to change chart</small></p>
               <div class="text-center" ng-repeat="data in sensor.payload">
                <p class="sensorData"><small><a ng-click="vm.updateChart(sensor._id,data.type)">{{data.type}}</a></small><br>&nbsp{{data.value}}</p>
              </div>
            </div>
-        <div class="col-sm-3 col-md-4">
-          <div class="box-account dataTable" >
-          <table class="table table-bordered ">
-            <caption>Sensor Info</caption>
-            <thead>
-              <tr>
-                <th>Sensor Name</th>
-                <th>Edit</th>
-                <th>Delete</th>
-             </tr>
+          </div>
+          <h2 id="sensors-list" class="text-center"><small>Your Sensors</small></h2>
+          <div ng-controller="SensorController as vm" class="list card card-device-list" ng-repeat="sensor in vm.sensorData">
+              <div class="item item-avatar">
+                <img src="img/sensor_icon.jpg">
+                <h2>{{sensor.sensorName}}</h2>
+                <p>id:{{sensor._id}}</p>
+              </div>
 
-          </thead>
-          <tbody>
-            <tr ng-repeat="sensor in vm.sensorData">
-              <td>{{sensor.sensorName}}</td>
-              <td ng-controller="SensorController as senCtrl" >
-                <button class="btn btn-sm btn-primary" ng-click="senCtrl.openSensorEditModal(sensor._id)">Edit</button>
-              </td>
-              <td ng-controller="SensorController as senCtrl">
-                <button class="btn btn-sm btn-warning" ng-click="senCtrl.openSensorDeleteModal(sensor._id)">Delete</button>
-              </td>
-          </tr>
-          </tbody>
-      </table>
-     </div>
+              <div class="item item-body">
+                <p>
+                  This is a {{sensor.sensorType.type}} sensor. To send from this sensor use the topic:<br>
+                  <em>mysensor/{{vm.currentUser}}/{{sensor._id}}
+                  </nav>
+                </p>
+                <p>
+                  <button ng-click="vm.openSensorEditModal(sensor._id)" class="button button-small button-balanced">Edit</button>
+                  <button ng-click="vm.openSensorDeleteModal(sensor._id)" class="button button-small button-assertive">Delete</button>
+                </p>
+              </div>
+            </div>
+            <h2 id="devices-list" class="text-center"><small>Your Devices</small></h2>
+            <div ng-controller="DeviceController as vm" class="list card card-device-list" ng-repeat="device in vm.deviceData">
+                <div class="item item-avatar">
+                  <img src="img/raspberry.jpeg">
+                  <h2>{{device.deviceName}}</h2>
+                  <p>id:{{device._id}}</p>
+                </div>
+
+                <div class="item item-body">
+                  <p>
+                    This is a {{device.deviceType}} device. To send from this device use the topic:<br>
+                    <em>mysensor/{{vm.currentUser}}/d/{{device._id}}
+                    </nav>
+                  </p>
+                  <p>
+                    <button ng-click="vm.openDeviceEditModal(device._id)" class="button button-small button-balanced">Edit</button>
+                    <button ng-click="vm.openDeviceDeleteModal(device._id)" class="button button-small button-assertive">Delete</button>
+                  </p>
+                </div>
+              </div>
+              <div id="to-be" class="list card card-device-list">
+                  <div class="item item-avatar">
+                    <h2>To Be Implemented</h2>
+                  </div>
+
+                  <div class="item item-body">
+                    <p>
+                      The Alarm Features has been pushed to next release!
+                    </p>
+                    <p>
+                      <button ng-click="vm.goToAnchor('top')" class="button button-small button-assertive">Go Back</button>
+                    </p>
+                  </div>
+                </div><br>
+  </ion-content>
+   <div class="bar bar-footer bar-dark">
+     <div class="title">SenseIt</div>
     </div>
-    <div class="col-sm-3 col-sm-offset-1 col-md-4">
-      <div class="box-account dataTable">
-        <table class="table table-bordered">
-          <caption>Device Info</caption>
-          <thead>
-            <tr>
-              <th>Device Name</th>
-              <th>Edit</th>
-              <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody ng-controller="DeviceController as devCtrl">
-          <tr ng-repeat="device in vm.deviceData">
-            <td>{{device.deviceName}}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" ng-click="devCtrl.openDeviceEditModal(device._id)">Edit</button>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-warning" ng-click="devCtrl.openDeviceDeleteModal(device._id)">Delete</button>
-            </td>
-        </tr>
-        </tbody>
-        </table>
-      </div>
-    </div>
-   </div>
-  </div> -->
+</ion-view>

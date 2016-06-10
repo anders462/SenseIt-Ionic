@@ -11,11 +11,11 @@
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input type="text" class="form-control input-sm" name="username" id="username" placeholder="Username" ng-model="vm.loginData.username" ng-required="true">
+          <input type="text" class="" name="username" id="username" placeholder="Username" ng-model="vm.loginData.username" ng-required="true">
         </label>
         <label class="item item-input">
           <span class="input-label">Password</span>
-          <input type="password" class="form-control input-sm" name="password" id="password" placeholder="Password" ng-model="vm.loginData.password" ng-required="true">
+          <input type="password" class="" name="password" id="password" placeholder="Password" ng-model="vm.loginData.password" ng-required="true">
         </label>
         <div class="padding alert">
             <p ng-show="vm.error" >* {{vm.errorMessage}}</p>
@@ -23,9 +23,9 @@
             <p ng-show="vm.loginForm.password.$error.required && vm.loginForm.password.$dirty">* Password is required!</p>
         </div>
         <label class="">
-          <button type="submit" class="button button-block button-positive" ng-disabled="loginForm.$invalid" >Sign in</button>
+          <button type="submit" class="button button-block button-positive" ng-disabled="vm.loginForm.$invalid" >Sign in</button>
         </label>
-      <!-- </div> -->
+       </div>
     </form>
     <button class="button button-block button-balanced" ng-click="vm.register()">Go to Register</button>
 

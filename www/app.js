@@ -9,6 +9,7 @@ angular
   //Angular Modules
   'ionic',
  'ngResource',
+ 'highcharts-ng',
   //Third party Modules
   'ui.router',
   //Own Modules
@@ -23,7 +24,7 @@ angular
 ])
 .run(preparePlatform)
 .config(configFunction)
-.constant("BASE_URL", "http://192.168.1.70:8001/")
+.constant("BASE_URL", "https://sense-it.herokuapp.com/")
 .run(stateAuthenticate);
 
 //PREPARE IONIC PLATFORM

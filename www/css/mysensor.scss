@@ -1,11 +1,16 @@
 $primary-color: #ffffff;
 $secondary-color: #05264d;
 $modal-background: #444;
+$modal-text-color:#ffffff;
+$modal-alert-color:red;
 
  // #11c1f3 calm
  // #387ef5 positive
  //#444 dark
 
+#chart-container {
+  width: 90%;
+}
 .mymodal .modal {
     min-height: 0 !important;
     border-radius:3% !important;
@@ -35,6 +40,85 @@ $modal-background: #444;
   font-weight: bold;
 }
 
+.device-modal-add {
+  width: 90%;
+  height: 60%;
+  top: 15%;
+  bottom: 25%;
+  right: 5%;
+  left: 5%;
+
+  select {
+    background: $modal-background;
+    color: $modal-text-color;
+  }
+}
+
+.device-modal-edit {
+  width: 90%;
+  height: 80%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%;
+
+  select {
+    background: $modal-background;
+    color: $modal-text-color;
+  }
+  p {
+    color: $modal-text-color;
+  }
+}
+
+.sensor-modal-add {
+  width: 90%;
+  height: 60%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%;
+
+  select {
+    background: $modal-background;
+    color: $modal-text-color;
+  }
+  .card .item {
+    background:lighten( $modal-background, 10% );
+    color: white;
+    .notification {
+      margin-top: 10px;
+      background-color:lighten( $modal-background, 20% );
+      color: $modal-text-color;
+      font-weight: bold;
+      padding: 10px;
+      border: 1px,solid,lighten( $modal-background, 30% );
+    }
+  }
+}
+
+.sensor-modal-delete {
+  width: 90%;
+  height: 35%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%;
+
+}
+
+.device-modal-delete  {
+  width: 90%;
+  height: 35%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%;
+
+}
+
+
+
 .login-modal {
     width: 90%;
     height: 50%;
@@ -42,12 +126,43 @@ $modal-background: #444;
     bottom: 20%;
     right: 5%;
     left: 5%;
+}
 
+.activate-modal {
+    width: 90%;
+    height: 75%;
+    top: 20%;
+    bottom: 20%;
+    right: 5%;
+    left: 5%;
+
+    p {
+      color: white;
+      font-weight:bold;
+      font-size: 1em;
+      margin-left: 5%;
+    }
+
+    .card .item {
+      background:lighten( $modal-background, 10% );
+      color: white;
+    }
+}
+
+
+.spinner svg {
+  width: 35px;
+  height: 35px;
+}
+
+.ion-close-circled {
+  color: red;
+  font-size: 35px;
 }
 
 .register-modal {
     width: 90%;
-    height: 80%;
+    height: 70%;
     top: 10%;
     bottom: 20%;
     right: 5%;
@@ -56,7 +171,7 @@ $modal-background: #444;
 
 .logout-modal {
     width: 70%;
-    height: 2%;
+    height: 25%;
     top: 30%;
     bottom: 30%;
     right: 15%;
@@ -103,20 +218,6 @@ input {
 }
 
 
-// .dataTable {
-//   margin-left: 20px;
-//   margin-right: 20px;
-// }
-
-.sensorName {
-  font-size: 1.3em;
-  color: rgb(226, 79, 7);
-}
-.sensorData {
-  font-size: 2em;
-  color: gray;
-}
-
 .dashboard {
   font-size:1.5em;
   margin-bottom:2%;
@@ -130,8 +231,8 @@ input {
 .box {
   color: white;
   padding: 10px;
-  margin-bottom: 1%;
-  height: 10%;
+  margin-bottom: 3%;
+  height: 80px;
 }
 
 .box.devices {
@@ -161,12 +262,17 @@ input {
   }
 
 .box-livedata {
-  padding:20px;
-  border: gray 2px solid;
-  margin-left: 20px;
-  margin-right:20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  border: gray 1px solid;
+  margin: 5% 5% 15% 5%;
+
+  .sensorName {
+    font-size: 1.2em;
+    color: rgb(226, 79, 7);
+  }
+  .sensorData {
+    font-size: 1.5em;
+    color: gray;
+  }
 
 }
 
@@ -186,43 +292,6 @@ input {
       font-size: 1.5em;
       font-family: arial;
   }
-
-
-.form-group {
-
-.help-block {
-  display: none;
-}
-
-}
-
-.fa.fa-database {
-  font-size:2em;
-  color: white;
-}
-
-.fa.fa-bell {
-  font-size:2em;
-  color: white;
-}
-
-.fa.fa-circle.activated {
-  font-size:3em;
-  color: green;
-}
-
-.fa.fa-circle.not-activated {
-  font-size:3em;
-  color: red;
-}
-
-.fa.fa-times {
-  font-size:1.5em;
-  color: white;
-  position: absolute;
-  top: 20px;
-  right: 35px;
-}
 
 .on {
   font-size:0.8em;
@@ -251,41 +320,27 @@ input {
 
 }
 
-.fa.fa-plus {
-  font-size:1.5em;
-  color: white;
-  // position: absolute;
-  // top: 20px;
-  right: 35px;
-}
+
 
 .plus-list {
   font-family: arial;
-  font-size:1.6em;
+  font-size:1.7em;
   color: white;
-  position: absolute;
-  bottom: 20px;
-  left: 35px;
+  position: relative;
+  bottom: 50%;
+  left: 58%;
 }
 
 small {
   font-family: arial;
-  font-size:0.6em;
-
-}
-
-.form-group.has-error {
-
-.help-block {
-  display: block;
-}
+  font-size:0.65em;
 
 }
 
 
 .main {
     height: 350px;
-    background-image: url("../images/Motherboard_450.jpg");
+    background-image: url("../img/Motherboard_450.jpg");
     background-size: cover;
     a {
       margin: 20px;
@@ -341,60 +396,3 @@ h4 {
 
   }
 }
-
-
-.beacon{
-  position:relative;;
-  top:20px;
-  left:50%;
-  background-color:rgb(64, 190, 38);
-  height:2em;
-  width:2em;
-  border-radius:50%;
-  -webkit-transform:translateX(-50%) translateY(-50%);
-}
-
-.beacon.deactive {
-  background-color:rgb(244, 4, 68);
-}
-// .beacon:before{
-//   // position:absolute;
-//   content:"";
-//   height:2em;
-//   width:2em;
-//   left:0;
-//   top:0;
-//   background-color:transparent;
-//   border-radius:50%;
-//   box-shadow:0px 0px 2px 2px #2980b9;
-//   -webkit-animation:active 2s infinite linear;
-//   animation:active 2s infinite linear;
-// }
-//
-// @-webkit-keyframes active{
-//   0%{
-//     -webkit-transform:scale(.1);
-//     opacity:1;
-//   }
-//   70%{
-//     -webkit-transform:scale(2.5);
-//     opacity:0;
-//   }
-//   100%{
-//     opacity:0;
-//   }
-// }
-//
-// @keyframes active{
-//   0%{
-//     transform:scale(.1);
-//     opacity:1;
-//   }
-//   70%{
-//     transform:scale(2.5);
-//     opacity:0;
-//   }
-//   100%{
-//     opacity:0;
-//   }
-// }

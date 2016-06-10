@@ -18,7 +18,7 @@ angular
 
       // Activate MQTT account
       var activate = function(mqttPassword) {
-        console.log(mqttPassword)
+        console.log("mqttpass", mqttPassword);
         return $http.post(BASE_URL +'activate',mqttPassword,{headers: {"x-access-token": $window.localStorage.token}});
       }
 

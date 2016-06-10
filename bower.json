@@ -8,6 +8,7 @@
   "dependencies": {
     "highcharts": "^4.2.5",
     "jquery": "^2.2.4",
-    "paho-mqtt": "*"
+    "paho-mqtt": "*",
+    "highcharts-ng": "^0.0.11"
   }
 }

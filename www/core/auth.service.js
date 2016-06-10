@@ -13,6 +13,7 @@ angular
 
       // Returns Login resource
       var login = function(creds) {
+        console.log(creds.username, creds.password);
         return $http.post(BASE_URL +'users/login',creds);
       }
 
