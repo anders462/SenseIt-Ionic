@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//home page sub module route config
 angular
   .module('SenseIt.home')
    .config(configFunction);

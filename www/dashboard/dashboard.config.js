@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//dashboard sub module route config
 angular
   .module('SenseIt.dashboard')
    .config(configFunction);

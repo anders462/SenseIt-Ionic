@@ -71,6 +71,23 @@ $modal-alert-color:red;
   }
 }
 
+.sensor-modal-edit {
+  width: 90%;
+  height: 80%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%;
+
+  select {
+    background: $modal-background;
+    color: $modal-text-color;
+  }
+  p {
+    color: $modal-text-color;
+  }
+}
+
 .sensor-modal-add {
   width: 90%;
   height: 60%;

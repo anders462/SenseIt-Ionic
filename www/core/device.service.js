@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-  //Factory for all authentication API calls part of sub module "core"
+  //Factory for all device API calls part of sub module "core"
 angular
   .module('SenseIt.core')
     .factory('deviceFactory', deviceFactory);
@@ -49,7 +49,6 @@ angular
         return $http.put(BASE_URL +'devices/' + deviceId, newDeviceData, {headers: {"x-access-token": $window.localStorage.token}});
       }
 
-
       //Creates a handler to listen to device updates
       var subscribe = function(scope, callback) {
               var handler = $rootScope.$on('devicesUpdated', callback);
@@ -59,17 +58,17 @@ angular
       var notify = function(event) {
               $rootScope.$emit('devicesUpdated');
           }
-
+      //cache devices
       var cacheDevices = function(data){
             deviceData = data;
           }
-
+      //get cached devices
       var getCachedDevices = function(){
             return deviceData;
           }
 
 
-
+//make methods available for others to use
       return {
         addDevice: addDevice,
         getDevices: getDevices,
@@ -85,12 +84,6 @@ angular
 
 
     };
-
-
-
-
-
-
 
 
 })();

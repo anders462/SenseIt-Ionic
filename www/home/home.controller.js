@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//home page sub module controller
 angular
   .module('SenseIt.home')
    .controller('HomeController',HomeController);
@@ -13,15 +13,16 @@ angular
   function HomeController($scope, $state,authFactory){
 //
   var vm = this; //set vm (view model) to reference main object
+  //check user loggedIn
   vm.loggedIn = function(){
     return authFactory.getAuthState();
   }
-
-vm.goToDashboard = function(){
-  if (vm.loggedIn()){
-    $state.go('app.dashboard');
+//goToDashboard function
+  vm.goToDashboard = function(){
+      if (vm.loggedIn()){
+      $state.go('app.dashboard');
+    }
   }
-}
 };
 
 })();

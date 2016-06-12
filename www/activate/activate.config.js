@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//ACTIVATE sub module routing
 angular
   .module('SenseIt.activate')
    .config(configFunction);

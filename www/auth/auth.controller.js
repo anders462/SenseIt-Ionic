@@ -2,7 +2,7 @@
 
 'use strict';
 
-//register page sub module
+//auth sub module controller
 angular
   .module('SenseIt.auth')
    .controller('AuthController',AuthController);
@@ -15,14 +15,14 @@ angular
 
   //init no error in submission is so check if user has actived MQTT account
   vm.error = false;
-  //getCurrentUser if set and
+  //getCurrentUser if set or false
   if (authFactory.getCurrentUser()){
     vm.activated = authFactory.getCurrentUser().activated || false;
   } else {
     vm.activated =  false;
   }
 
-
+//reset formdata
   vm.loginData = {};
   vm.registerData = {};
 
@@ -111,7 +111,8 @@ angular
           vm.errorMessage = err.data.err.message; //log error message
         })
     }
-// !!!!!! $invalid submit dim doesn't work///
+// Note: check $invalid submit works....
+//register user
     vm.doRegister = function(){
       console.log("registration obj",vm.registerData)
       authFactory.register(vm.registerData)
@@ -131,6 +132,7 @@ angular
 
     }
 
+//set up off validation params
     vm.shouldValidate = function(name){
       var rules = {
         username: true,
@@ -144,7 +146,7 @@ angular
       return rules[name];
     }
 
-
+//logout function, delete token, reset authstate etc
       vm.doLogout = function(){
         authFactory.deleteToken();
         authFactory.cacheAuthState(false);

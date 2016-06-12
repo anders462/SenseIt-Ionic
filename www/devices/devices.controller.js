@@ -2,7 +2,7 @@
 
 'use strict';
 
-//register page sub module
+//device sub module controller
 angular
   .module('SenseIt.devices')
    .controller('DeviceController',DeviceController);
@@ -19,13 +19,15 @@ angular
   function DeviceController($location,$ionicModal,$scope, deviceFactory, authFactory){
 
   var vm = this; //set vm (view model) to reference main object
+  //reset var and obj, get activated status and currentUser username
   vm.error = false;
   vm.activated = authFactory.getCurrentUser().activated;
-  $scope.deviceIdData = {};
+  vm.deviceIdData = {};
   vm.deviceForm ={};
   vm.deviceData = {};
   vm.currentUser = authFactory.getCurrentUser().username;
 
+  //retrieve chached device for specific id
     var getCachedDeviceId = function(deviceId){
       vm.deviceData = deviceFactory.getCachedDevices();
       vm.deviceData.forEach(function(device){
@@ -109,7 +111,7 @@ angular
     };
 
 
-
+//add device function
     vm.addDevice = function(){
       console.log("device",vm.deviceData)
       deviceFactory.addDevice(vm.deviceData)
@@ -117,7 +119,7 @@ angular
           vm.deviceData = '';
           vm.closeDeviceAddModal();
           vm.error = false;
-          deviceFactory.notify();
+          deviceFactory.notify(); //notify device change
           console.log(response.data);
         })
         .catch(function(err){
@@ -131,6 +133,7 @@ angular
         })
     }
 
+//edit device function
      vm.editDevice = function(deviceData){
        console.log("editDevice",deviceData);
        delete deviceData.sensors;
@@ -139,7 +142,7 @@ angular
           vm.deviceIdData = '';
           vm.closeDeviceEditModal();
           vm.error = false;
-          deviceFactory.notify();
+          deviceFactory.notify(); //notify device change
           console.log("after device edit",response.data);
         })
         .catch(function(err){
@@ -153,13 +156,14 @@ angular
         })
     }
 
+  //delete device function
     vm.deleteDevice = function(deviceId){
       console.log( "delete",deviceId);
       deviceFactory.deleteDevice(deviceId)
         .then(function(response){
           vm.closeDeviceDeleteModal();
           vm.error = false;
-          deviceFactory.notify();
+          deviceFactory.notify(); //notify device change
           console.log("after device delete",response.data);
         })
         .catch(function(err){

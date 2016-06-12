@@ -68,16 +68,17 @@ angular
               $rootScope.$emit('sensorsUpdated');
           }
 
+      //cache Sensors
       var cacheSensors = function(data){
         sensorData = data;
       }
-
+      // get cached sensors
       var getCachedSensors = function(){
         return sensorData;
       }
 
 
-
+//make methods available for others to use
       return {
         getAllSensors: getAllSensors,
         getDeviceSensors: getDeviceSensors,
@@ -94,12 +95,6 @@ angular
 
 
     };
-
-
-
-
-
-
 
 
 })();

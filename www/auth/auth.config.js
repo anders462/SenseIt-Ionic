@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//auth sub module route config
 angular
   .module('SenseIt.auth')
    .config(configFunction);

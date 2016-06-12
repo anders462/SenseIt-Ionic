@@ -1,9 +1,4 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
+//Main app modules
 angular
 .module('SenseIt',[
   //Angular Modules
@@ -48,6 +43,7 @@ function preparePlatform($ionicPlatform) {
 };
 
 //MAIN APP MODULE CONFIG FUNCTION
+//none of About, Resources, and Support routes have been implemented
 configFunction.$inject = ['$stateProvider', '$urlRouterProvider']
 
 function configFunction($stateProvider, $urlRouterProvider) {
@@ -113,7 +109,7 @@ function configFunction($stateProvider, $urlRouterProvider) {
 stateAuthenticate.$inject = ['$rootScope', '$state', 'authFactory'];
 
 function stateAuthenticate($rootScope, $state, authFactory){
-
+  //AUTHENTICATION BEFORE STATE CHANGE
   authFactory.isAuthenticated()
   .then(function(resp){
     console.log("isAuthenticated resp", true);
@@ -123,7 +119,8 @@ function stateAuthenticate($rootScope, $state, authFactory){
     authFactory.cacheAuthState(false);
     console.log("isAuthenticated resp", false);
   });
-
+  //CHECK IF STATE CHANGE CAN OCCUR, ONLY IF ROUTE NOT PROTECTED OR
+  //ROUTE PROTECTED AND USER AUTHENTICATED
   $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
     console.log("tostate", toState.data.authenticate);
     console.log("authState",authFactory.getAuthState());
@@ -135,32 +132,5 @@ function stateAuthenticate($rootScope, $state, authFactory){
       event.preventDefault();
     }
   });
-
-  // // .fromTemplateUrl() method
-  // $ionicPopover.fromTemplateUrl('templates/dish-detail-popover.html', {
-  //   scope: $scope
-  // }).then(function(popover) {
-  //   $scope.popover = popover;
-  // });
-
-
-  // $scope.openPopover = function($event) {
-  //   $scope.popover.show($event);
-  // };
-  // $scope.closePopover = function() {
-  //  $scope.popover.hide();
-  // };
-  // //Cleanup the popover when we're done with it!
-  // $scope.$on('$destroy', function() {
-  //   $scope.popover.remove();
-  // });
-  // // Execute action on hide popover
-  // $scope.$on('popover.hidden', function() {
-  //   // Execute action
-  // });
-  // // Execute action on remove popover
-  // $scope.$on('popover.removed', function() {
-  //   // Execute action
-  // });
 
 }

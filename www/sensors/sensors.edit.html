@@ -1,0 +1,95 @@
+
+<div class="mymodal">
+  <ion-modal-view class="sensor-modal-edit">
+  <ion-header-bar>
+    <h1 class="title">Edit Sensor</h1>
+    <div class="buttons">
+      <button class="button button-outline button-stable" ng-click="vm.closeSensorEditModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content >
+      <form ng-submit="vm.editSensor()" name="vm.sensorForm" novalidate >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Sensor Name</span>
+          <input type="text" class="" name="sensorName" id="sensorName" placeholder="Sensor Name" ng-model="vm.sensorIdData.sensorName" ng-required="true">
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Connected to</span>
+          <select class="" name="deviceId" ng-required="true" ng-model="vm.sensorIdData.belongTo">
+            <option  value="">Connected to device</option>
+            <option  value="0">Standalone Sensor</option>
+        <option ng-repeat="device in vm.deviceData" value="{{device._id}}">{{device.deviceName}}</option>
+          </select>
+        </label>
+
+        <label class="item item-input">
+           <span class="input-label">Address</span>
+        </label>
+         <label class="item item-input">
+           <input type="text" class="" name="country" id="country" placeholder="Country" ng-model="vm.sensorIdData.address.country" ng-required="false">
+         </label>
+         <label class="item item-input">
+           <input type="text" class="" name="city" id="city" placeholder="City" ng-model="vm.sensorIdData.address.city" ng-required="false">
+         </label>
+         <label class="item item-input">
+           <input type="text" class="" name="zipCode" id="zipCode" placeholder="Zip Code" ng-model="vm.sensorIdData.address.zipCode" ng-required="false">
+         </label>
+           <label class="item item-input">
+           <input type="text" class="" name="streetName" id="streetName" placeholder="Street Name" ng-model="vm.sensorIdData.address.streetName" ng-required="false">
+         </label>
+           <label class="item item-input">
+           <input type="text" class="" name="houseNumber" id="houseNumber" placeholder="Street Number" ng-model="vm.sensorIdData.address.houseNumber" ng-required="false">
+         </label>
+         <label class="item item-input">
+           <span class="input-label">Sensor Info</span>
+         </label>
+         <label class="item item-input">
+          <input type="text" class="" name="sensorManufacturer" id="sensorManufacturer" placeholder="Manufacturer" ng-model="vm.sensorIdData.sensorInfo.manufacturer" ng-required="false">
+        </label>
+         <label class="item item-input">
+          <input type="text" class="form-control input-sm" name="model" id="model" placeholder="Model" ng-model="vm.sensorIdData.sensorInfo.model" ng-required="false">
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Sensor Type</span>
+          <!--MAKE sensor LIST BE AN OBJECT READ FROM DATABASE FOR SCALABILITY AND ADMIN IN FUTURE -->
+          <select class="" name="sensorType" ng-required="true" ng-model="vm.sensorIdData.sensorType.type">
+            <option value="">Sensor type</option>
+            <option value="Temperature">Temperature</option>
+            <option value="Humidity">Humidity</option>
+            <option value="Pressure">Pressure</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Sensor Unit</span>
+          <!--MAKE sensor LIST BE AN OBJECT READ FROM DATABASE FOR SCALABILITY AND ADMIN IN FUTURE -->
+          <select class="" name="sensorUnit" ng-required="true" ng-model="vm.sensorIdData.sensorType.units">
+              <option value="">Sensor Unit</option>
+              <option value="C">Deg Celcius</option>
+              <option value="F">Deg Farenheit</option>
+              <option value="%">Percentage (%)</option>
+              <option value="mbar">Millibar</option>
+              <option value="kPa">Kilo Pascal</option>
+          </select>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Sensor Image</span>
+          <input type="text" class="" name="sensorImage" id="sensorImage" placeholder="Image" ng-model="vm.sensorIdData.sensorImage" ng-required="false">
+       </label>
+
+      </div>
+        <div class="padding alert">
+            <p ng-show="vm.error" >* {{vm.errorMessage}}</p>
+            <p ng-show="vm.sensorForm.sensorName.$error.required && vm.sensorForm.sensorName.$dirty">* Username is required!</p>
+            <p ng-show="vm.sensorForm.sensorType.$error.required && vm.sensorForm.sensorType.$dirty">* Sensor Type is required!</p>
+            <p ng-show="vm.sensorForm.sensorUnit.$error.required && vm.sensorForm.sensorUnit.$dirty">* Sensor Unit is required!</p>
+            <p ng-show="vm.sensorForm.deviceId.$error.required && vm.sensorForm.deviceId.$dirty">* Connected to is required!</p>
+        </div>
+        <label class="">
+          <button type="submit" class="button button-block button-positive" ng-disabled="vm.sensorForm.$invalid">Save Sensor</button>
+        </label>
+        <button class="button button-block button-balanced" ng-click="vm.closeSensorEditModal()">Back To Dashboard</button>
+    </form>
+  </ion-content>
+</ion-modal-view>
+</div>

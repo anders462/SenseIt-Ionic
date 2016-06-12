@@ -22,16 +22,16 @@ angular
         console.log("creds",creds);
         return $http.post(BASE_URL +'users/register',creds);
       }
-
+      //returns password update resources
       var update = function(creds) {
         return $http.put(BASE_URL +'users/update',creds,{headers: {"x-access-token": $window.localStorage.token}});
       }
-
+      //return info about user used in mqtt service to connect
       var getMe = function() {
         return $http.get(BASE_URL +'users/me',{headers: {"x-access-token": $window.localStorage.token}});
       }
 
-
+      //checks if user is authenticated
       var isAuthenticated = function(){
         var deferred = $q.defer();
 
@@ -48,11 +48,11 @@ angular
         return deferred.promise;
       }
 
-
+      //cache AuthState
       var cacheAuthState = function(state) {
         authState = state;
       };
-
+      //get cached authState
       var getAuthState = function(state) {
         return authState;
       };
@@ -77,12 +77,12 @@ angular
         $window.localStorage.removeItem("cache");
         $window.localStorage.removeItem('currentUser');
       }
-
+      //set currentUser in localStorage
       var setCurrentUser = function(user) {
         console.log("setuser",user)
         $window.localStorage.currentUser = JSON.stringify(user);
       }
-
+      //get currentUser from localStorage
       var getCurrentUser = function(){
         if ($window.localStorage.currentUser){
           return JSON.parse($window.localStorage.currentUser);
@@ -90,7 +90,7 @@ angular
           return null;
         }
       }
-
+      //change activated status of currentUser in localStorage
       var setCurrentUserActivated = function(activated){
           var currentUser = JSON.parse($window.localStorage.currentUser);
           currentUser.activated = activated;
@@ -100,7 +100,7 @@ angular
 
 
 
-
+//make methods available for others to use
       return {
         login: login,
         register: register,

@@ -2,7 +2,7 @@
 
 'use strict';
 
-//activate page sub module
+//Activate sub module Controller
 angular
   .module('SenseIt.activate')
    .controller('ActivateController',ActivateController);
@@ -20,14 +20,14 @@ angular
   function ActivateController($state,$ionicModal, $scope, activateFactory,authFactory,mqttFactory){
 
   var vm = this; //set vm (view model) to reference main object
-  vm.error = false;
-  vm.currentUser = authFactory.getCurrentUser().username;
-  vm.activated = authFactory.getCurrentUser().activated;
-  vm.toggleActivated = vm.activated;
-  vm.mqttUsername = authFactory.getCurrentUser().username;
-  vm.mqttPassword = '*******';
+  vm.error = false; //reset error messages for dialogs
+  vm.currentUser = authFactory.getCurrentUser().username;  //get username for cache
+  vm.activated = authFactory.getCurrentUser().activated; //get activation status from cache
+  vm.toggleActivated = vm.activated; //set toggle flag for activate button
+  vm.mqttUsername = authFactory.getCurrentUser().username; //get username for cache
+  vm.mqttPassword = '*******';  //set masked PASSWORD
   vm.activationData ={};
-  vm.connected = mqttFactory.getConnected();
+  vm.connected = mqttFactory.getConnected(); //get connection status
 
     // call createMqttClient with 10 sec delay to take into
     //acount creation delay on cloudmqtt side as well, make sure
@@ -39,7 +39,7 @@ angular
       },10000);
     };
 
-    //if customer is already activated try to connect to mqtt service
+    //if customer is already activated  not connected try to connect to mqtt service
     if(vm.activated && !vm.connected){
       vm.connectMqtt();
     }
@@ -55,7 +55,7 @@ angular
     vm.closeActivate = function() {
       console.log("close")
       vm.activateData = {}; // reset form
-      vm.toggleActivated = vm.activated;
+      vm.toggleActivated = vm.activated; //change state of button
       vm.mqttPassword ='';
       vm.activateModal.hide();
     };
@@ -71,7 +71,8 @@ angular
     };
 
 
-///ADD MIN PASSWORD LENGTH of 8
+///Note: ADD MIN PASSWORD LENGTH of 8
+//activate user account on CloudMqtt
     vm.doActivate = function(){
       console.log("creds",vm.activationData);
       activateFactory.activate(vm.activationData)
@@ -98,14 +99,15 @@ angular
         })
     }
 
+    //deActivate == delete CloudMqtt account
     vm.deActivate = function(){
       activateFactory.deActivate()
         .then(function(response){
           vm.error = false;
           vm.activated = response.data.resp.activated;
           console.log('activated',vm.activated)
-          authFactory.setCurrentUserActivated(vm.activated);
-          activateFactory.notify();
+          authFactory.setCurrentUserActivated(vm.activated); //cache status change
+          activateFactory.notify(); //notify status change
           vm.toggleActivated = vm.activated;
           vm.closeActivate();
         })
@@ -120,7 +122,7 @@ angular
         })
     }
 
-
+    //subscribe to connectionLost event listner
     mqttFactory.subscribe($scope, function connectionLost() {
       console.log("connectionLost");
       mqttFactory.setConnected(false);
@@ -128,13 +130,14 @@ angular
       vm.connectMqtt();
     });
 
+    //subscribe to connect event listner
     mqttFactory.subscribeConnect($scope, function connect() {
       console.log("connected");
       mqttFactory.setConnected(true);
       vm.connected = mqttFactory.getConnected();
     });
 
-
+//set validation params
     vm.shouldValidate = function(name){
       var rules = {
         password: true,

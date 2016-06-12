@@ -39,7 +39,6 @@
         </label>
         <label class="item item-input item-select">
           <span class="input-label">Connected to</span>
-          <!--MAKE sensor LIST BE AN OBJECT READ FROM DATABASE FOR SCALABILITY AND ADMIN IN FUTURE -->
           <select class="" name="deviceId" ng-required="true" ng-model="vm.deviceId">
             <option  value="">Connected to device</option>
             <option  value="0">Standalone Sensor</option>
@@ -74,67 +73,3 @@
   </ion-content>
 </ion-modal-view>
 </div>
-
-
-
-
-    <!-- <div class="ngdialog-message">
-        <div class="">
-            <h3>{{sensorTitle}} </h3>
-        </div>
-        <div class="">&nbsp;</div>
-        <div class="" ng-show="!sensorCreated">
-          <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
-            <form ng-submit="addSensor(sensorIdData,deviceId)" name="sensorForm" novalidate >
-                <div class="form-group" ng-class="{'has-error': sensorForm.sensorName.$invalid && sensorForm.sensorName.$touched}">
-                    <label class="sr-only" for="sensorName">Sensor Name</label>
-                    <input type="text" class="form-control input-sm" name="sensorName" id="sensorName" placeholder="Sensor Name" ng-model="sensorIdData.sensorName" ng-required="true">
-                    <span class="help-block" ng-if="sensorForm.sensorName.$error.required && sensorForm.sensorName.$touched">Sensor Name is required!</span>
-                </div>
-                <div class="form-group" ng-class="{'has-error': sensorForm.sensorType.$invalid && sensorForm.sensorType.$touched}">
-                  <select class="form-control input-sm" name="sensorType" ng-required="true" ng-model="sensorIdData.sensorType.type">
-                      <option value="">Sensor type</option>
-                      <option value="Temperature">Temperature</option>
-                      <option value="Humidity">Humidity</option>
-                      <option value="Pressure">Pressure</option>
-                  </select>
-                  <span class="help-block" ng-if="sensorForm.sensorType.$error.required && sensorForm.sensorType.$touched">Sensor Type is required!</span>
-                </div>
-                <div class="form-group" ng-class="{'has-error': sensorForm.sensorUnit.$invalid && sensorForm.sensorUnit.$touched}">
-                  <select class="form-control input-sm" name="sensorUnit" ng-required="true" ng-model="sensorIdData.sensorType.units">
-                      <option value="">Sensor Unit</option>
-                      <option value="C">Deg Celcius</option>
-                      <option value="F">Deg Farenheit</option>
-                      <option value="%">Percentage (%)</option>
-                      <option value="mbar">Millibar</option>
-                      <option value="kPa">Kilo Pascal</option>
-                  </select>
-                  <span class="help-block" ng-if="sensorForm.sensorUnit.$error.required && sensorForm.sensorUnit.$touched">Sensor Type is required!</span>
-                </div>
-                <div class="form-group" ng-class="{'has-error': sensorForm.deviceId.$invalid && sensorForm.deviceId.$touched}">
-                  <label class="" for="sensorName">Connected to</label>
-                  <select class="form-control input-sm" name="deviceId" ng-required="true" ng-model="deviceId">
-                    <option  value="">Connected to device</option>
-                    <option  value="0">Standalone Sensor</option>
-                    <option ng-repeat="device in deviceData" value="{{device._id}}">{{device.deviceName}}</option>
-                  </select>
-                  <span class="help-block" ng-if="sensorForm.deviceId.$error.required && sensorForm.deviceId.$touched">Connected to is required!</span>
-                </div>
-                <button type="submit" class="btn btn-info btn-sm" ng-disabled="sensorForm.$invalid">Save Sensor</button>
-                <button type="button" class="btn btn-default btn-sm" ng-click=closeThisDialog()>Cancel</button> &nbsp; &nbsp;
-            </form>
-        </div>
-        <div class="" ng-if="sensorCreated">
-          <div class="well well-sm">
-            Please use the following MQTT Topic to publish data<br>
-            <strong>Sensor: </strong>{{sensorName}}</br>
-            <strong>Topic: </strong><em>{{sensorTopic}}</em>
-          </div>
-          <button ng-show="!vm.activated" type="button" class="btn btn-success btn-sm" ng-click="vm.goToActivate()">Activate</button> &nbsp; &nbsp;
-          <button ng-show="vm.activated" type="button" class="btn btn-success btn-sm" ng-click="goToDashboard()">Go to Dashboard</button> &nbsp; &nbsp;
-
-        </div>
-        <div>
-
-        </div>
-    </div> -->

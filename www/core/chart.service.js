@@ -2,6 +2,7 @@
 
 'use strict'
 
+//chart factory service as part of core sub module
 angular
   .module('SenseIt.core')
   .factory("chartFactory", chartFactory)
@@ -12,9 +13,10 @@ function chartFactory(){
 
   var chart1;
 
-  //configuration
+  //configuration of Highcharts
 var chartValues = function(series, chartTitle,yAxisData){
 
+//create new chart instance
 chart1 = new Highcharts.Chart({
             chart: {
                 zoomType: 'x',
@@ -70,10 +72,12 @@ chart1 = new Highcharts.Chart({
 };
 
 
+//add data series
 var addSerie = function(serie){
     chart1.addSeries(serie,true)
 }
 
+//redraw chart
 var reDraw = function(){
     console.log("redraw")
     chart1.redraw();
@@ -83,7 +87,7 @@ var reDraw = function(){
    return {
      chartValues: chartValues,
      addSerie: addSerie,
-//      reDraw: reDraw
+// not used     reDraw: reDraw
    }
 
 

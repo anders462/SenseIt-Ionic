@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//core sub module
 angular
   .module('SenseIt.core',[]);
 

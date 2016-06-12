@@ -2,7 +2,7 @@
 
 'use strict';
 
-//register page sub module
+//auth sub module
 angular
   .module('SenseIt.auth',[]);
 

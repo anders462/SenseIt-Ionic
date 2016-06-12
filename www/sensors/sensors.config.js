@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//sensor sub module route config
 angular
   .module('SenseIt.sensors')
    .config(configFunction);

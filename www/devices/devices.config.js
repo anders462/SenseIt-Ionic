@@ -2,7 +2,7 @@
 
 'use strict';
 
-//home page sub module
+//devices sub module route config
 angular
   .module('SenseIt.devices')
    .config(configFunction);

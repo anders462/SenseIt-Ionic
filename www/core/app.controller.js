@@ -1,3 +1,6 @@
+
+
+//app controller part of core sub module
 angular.module('SenseIt.core', [])
  .controller('AppCtrl', AppCtrl)
 

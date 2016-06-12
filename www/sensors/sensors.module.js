@@ -2,7 +2,7 @@
 
 'use strict';
 
-//register page sub module
+//sensor sub module
 angular
   .module('SenseIt.sensors',[]);
 

@@ -2,7 +2,7 @@
 
 'use strict'
 
-//Factory for all sensors API calls part of sub module "core"
+//Factory that handles mqtt messaging part of sub module "core"
 angular
 .module('SenseIt.core')
   .factory('mqttFactory', mqttFactory);
@@ -19,6 +19,7 @@ function mqttFactory ($http, $window, $rootScope, authFactory){
 var mqttData = {};
 var connected = false;
 
+//create mqtt client
  var createMqttClient = function() {
    console.log("createMqttClient");
   //NEED TO ENCRYPT MQTT password
@@ -33,9 +34,11 @@ var connected = false;
       console.log(err);
     })
 
+
+//connect to cloudmqtt via paho-mqtt client
 var connect = function(creds){
 
-  // Create a client instance// 32337 port for testing
+  // Create a client instance!! use 32337 port for testing
  var client = new Paho.MQTT.Client("m12.cloudmqtt.com", 35588,"web_" + parseInt(Math.random() * 100, 10));
   // set callback handlers
   client.onConnectionLost = onConnectionLost;
@@ -89,14 +92,17 @@ var connect = function(creds){
  }
 }
 
+//get cached mqtt message (not used in this version, need set method as well)
 function getCachedMqttData(){
   return mqttData;
 }
 
+//set connect status
 function setConnected(status){
   connected = status;
 }
 
+//get connect status
 function getConnected(){
   return connected;
 }

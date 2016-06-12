@@ -43,6 +43,19 @@
   .device-modal-edit p {
     color: #ffffff; }
 
+.sensor-modal-edit {
+  width: 90%;
+  height: 80%;
+  top: 20%;
+  bottom: 20%;
+  right: 5%;
+  left: 5%; }
+  .sensor-modal-edit select {
+    background: #444;
+    color: #ffffff; }
+  .sensor-modal-edit p {
+    color: #ffffff; }
+
 .sensor-modal-add {
   width: 90%;
   height: 60%;

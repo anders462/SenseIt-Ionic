@@ -2,7 +2,7 @@
 
 'use strict';
 
-//register page sub module
+//device sub module
 angular
   .module('SenseIt.devices',[]);
 
